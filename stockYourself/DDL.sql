@@ -11,7 +11,7 @@ last_name varchar(40) NOT NULL,
 username varchar(40) UNIQUE NOT NULL,
 passwrd varchar(40) NOT NULL,
 email varchar(70) UNIQUE NOT NULL,
-phone_number integer UNIQUE,
+phone_number varchar(15),
 role_id integer REFERENCES role NOT NULL,
 portfolio_id integer REFERENCES portfolio
 );
