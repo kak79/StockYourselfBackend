@@ -16,7 +16,7 @@ public class Post {
 		postContent = " ";
 		creationDate = LocalDate.now();
 		creationTime = LocalTime.now();
-		creator = null;
+		creator = new User();
 	}
 
 	public int getPostId() {
@@ -83,6 +83,4 @@ public class Post {
 				&& Objects.equals(creator, other.creator) && Objects.equals(postContent, other.postContent)
 				&& postId == other.postId;
 	}
-	
-	
 }
