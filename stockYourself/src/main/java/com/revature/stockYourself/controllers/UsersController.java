@@ -1,5 +1,12 @@
 package com.revature.stockYourself.controllers;
 
-public class UsersController {
+import java.io.IOException;
+import java.math.BigDecimal;
 
+import yahoofinance.Stock;
+import yahoofinance.YahooFinance;
+
+public class UsersController {
+	
+	
 }
