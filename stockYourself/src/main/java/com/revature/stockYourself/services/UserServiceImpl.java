@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
 		Calendar from = Calendar.getInstance();
 		Calendar to = Calendar.getInstance();
 		from.add(Calendar.YEAR, -years);
-		Stock stock = YahooFinance.get("GOOG", from, to, Interval.WEEKLY);
+		Stock stock = YahooFinance.get(stockname, from, to, Interval.WEEKLY);
 		return stock;
 	}
 	
