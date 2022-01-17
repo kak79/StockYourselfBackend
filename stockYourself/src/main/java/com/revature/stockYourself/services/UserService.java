@@ -5,6 +5,7 @@ package com.revature.stockYourself.services;
 import java.util.List;
 
 import com.revature.stockYourself.beans.Portfolio;
+import com.revature.stockYourself.beans.Post;
 import com.revature.stockYourself.beans.Stock;
 import com.revature.stockYourself.beans.User;
 import com.revature.stockYourself.exceptions.BadGetAllPortfolios;
@@ -29,5 +30,5 @@ public interface UserService {
 	public void buyStock(User loggedInUser, Stock stockToBuy);  //can be handled in frontend and sent to updatePortfolio
 	public void sellStock(User loggedInUser, Stock stockToSell);  ////can be handled in frontend and sent to updatePortfolio
 	
-	
+	public void deletePost(User loggedInUser, Post postToDelete);
 }

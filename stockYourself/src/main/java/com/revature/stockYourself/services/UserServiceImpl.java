@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.stockYourself.beans.Portfolio;
+import com.revature.stockYourself.beans.Post;
 import com.revature.stockYourself.beans.Stock;
 import com.revature.stockYourself.beans.User;
 import com.revature.stockYourself.data.PortfolioRepository;
@@ -198,5 +199,11 @@ public class UserServiceImpl implements UserService {
 			//throw new AllStocksAreEmptyException(); // create AllStocksAreEmptyException
 		}
 		return null;
+	}
+
+	@Override
+	public void deletePost(User loggedInUser, Post postToDelete) {
+		// TODO Auto-generated method stub
+		
 	}
 }
