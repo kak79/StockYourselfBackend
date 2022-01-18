@@ -16,6 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.stockYourself.beans.Stock;
 import com.revature.stockYourself.beans.User;
+import com.revature.stockYourself.exceptions.AllStocksAreEmptyException;
+import com.revature.stockYourself.exceptions.DataNotFoundException;
+import com.revature.stockYourself.exceptions.NoPortfolioByUserException;
+import com.revature.stockYourself.exceptions.PortfolioIdUserIdConflictException;
+import com.revature.stockYourself.exceptions.PortfolioToUpdateIsNullException;
+import com.revature.stockYourself.exceptions.StockListWasEmptyException;
 import com.revature.stockYourself.services.AdminService;
 import com.revature.stockYourself.services.UserService;
 
@@ -32,7 +38,7 @@ public class StockController {
 	private static Logger log = LogManager.getLogger(PortfolioController.class);
 	
 	@GetMapping
-	public ResponseEntity<List<Stock>> getStocks() {
+	public ResponseEntity<List<Stock>> getStocks() throws AllStocksAreEmptyException {
 		log.info("Getting all stocks");
 		
 		List<Stock> allStocks = userServ.getAllStocks();
@@ -45,7 +51,7 @@ public class StockController {
 
 	
 	@PutMapping
-	public ResponseEntity<Void> buyStock(@RequestBody User loggedInUser, @RequestBody Stock stockToBuy) {
+	public ResponseEntity<Void> buyStock(@RequestBody User loggedInUser, @RequestBody Stock stockToBuy) throws StockListWasEmptyException, DataNotFoundException, NoPortfolioByUserException, PortfolioIdUserIdConflictException, PortfolioToUpdateIsNullException {
 		log.info("Logged in user is buying a stock");
 		log.debug("User: " +loggedInUser+ " failed to buy stock: " +stockToBuy);
 		
@@ -58,7 +64,7 @@ public class StockController {
 		return ResponseEntity.status(HttpStatus.CONFLICT).build();
 	}
 	@PutMapping
-	public ResponseEntity<Void> sellStock(@RequestBody User loggedInUser, @RequestBody Stock stockToSell) {
+	public ResponseEntity<Void> sellStock(@RequestBody User loggedInUser, @RequestBody Stock stockToSell) throws StockListWasEmptyException, NoPortfolioByUserException, DataNotFoundException, PortfolioIdUserIdConflictException, PortfolioToUpdateIsNullException { //instead of throwing here should I surround with a try catch block?
 		log.info("Logged in user is selling a stock");
 		log.debug("User: " +loggedInUser+ " failed to buy stock: " +stockToSell);
 		

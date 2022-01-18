@@ -18,11 +18,17 @@ import com.revature.stockYourself.data.PortfolioRepository;
 import com.revature.stockYourself.data.PostRepository;
 import com.revature.stockYourself.data.StockRepository;
 import com.revature.stockYourself.data.UserRepository;
+import com.revature.stockYourself.exceptions.AllStocksAreEmptyException;
 import com.revature.stockYourself.exceptions.BadGetAllPortfolios;
+import com.revature.stockYourself.exceptions.DataNotFoundException;
 import com.revature.stockYourself.exceptions.IncorrectCredentialsException;
 import com.revature.stockYourself.exceptions.NoPortfolioByStock;
+import com.revature.stockYourself.exceptions.NoPortfolioByUserException;
 import com.revature.stockYourself.exceptions.NoPortfolioByUserIdException;
 import com.revature.stockYourself.exceptions.NoPortfolioByUsernameException;
+import com.revature.stockYourself.exceptions.PortfolioIdUserIdConflictException;
+import com.revature.stockYourself.exceptions.PortfolioToUpdateIsNullException;
+import com.revature.stockYourself.exceptions.StockListWasEmptyException;
 import com.revature.stockYourself.exceptions.UsernameAlreadyExistsException;
 import com.revature.stockYourself.services.UserService;
 
@@ -111,7 +117,7 @@ public class UserServiceImpl implements UserService {
 //				portfolioByStock.add(portfolio);
 //			
 //			} else {
-//				throw new NoPortfolioByStock();
+//				throw new NoPortfolioByStockException();
 //			}
 //	
 		}
@@ -133,22 +139,22 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
-	public void updatePortfolio(User loggedInUser, Portfolio portfolioToUpdate) {
+	public void updatePortfolio(User loggedInUser, Portfolio portfolioToUpdate) throws PortfolioIdUserIdConflictException, PortfolioToUpdateIsNullException {
 		if (portfolioToUpdate != null && loggedInUser != null) {
 						if (portfolioToUpdate.getPortfolioId() == loggedInUser.getPortfolio().getPortfolioId()) {
 								portfolioRepo.save(portfolioToUpdate);
 						} else {
-							// throw new PortfolioIdUserIdConflict(); // create PortfolioIdUserIdConflict() exception
+							throw new PortfolioIdUserIdConflictException(); // create PortfolioIdUserIdConflict() exception
 						}
 		} else {
-			// throw new PortfolioToUpdateIsNull();  //create PortfolioToUpdateIsNull() exception
+			throw new PortfolioToUpdateIsNullException();  //create PortfolioToUpdateIsNull() exception
 		}
 	}
 	
 
 	@Override
 	@Transactional
-	public void buyStock(User loggedInUser, Stock stockToBuy) {
+	public void buyStock(User loggedInUser, Stock stockToBuy) throws StockListWasEmptyException, DataNotFoundException, NoPortfolioByUserException {
 		if (loggedInUser != null && stockToBuy != null) {
 			Portfolio loggedInUserPortfolio = loggedInUser.getPortfolio();
 			
@@ -158,17 +164,17 @@ public class UserServiceImpl implements UserService {
 				loggedInUserPortfolio.setPortfolioStocksToStocks(loggedInUserPortfolioStocks);
 				
 			} else {
-				//throw new NoPortfolioByUserException();  //create NoPortfolioByUser(); exception
+				throw new NoPortfolioByUserException();
 			}
 		} else {
-			//throw new DataNotFoundException();  // create DataNotFoundException
+			throw new DataNotFoundException();  
 		}
 		
 	}
 
 	@Override
 	@Transactional
-	public void sellStock(User loggedInUser, Stock stockToSell) {
+	public void sellStock(User loggedInUser, Stock stockToSell) throws StockListWasEmptyException, NoPortfolioByUserException, DataNotFoundException {
 		if (loggedInUser != null && stockToSell != null) {
 			Portfolio loggedInUserPortfolio = loggedInUser.getPortfolio();
 			
@@ -182,23 +188,22 @@ public class UserServiceImpl implements UserService {
 				loggedInUserPortfolio.setPortfolioStocksToStocks(loggedInUserPortfolioStocks);
 				
 			} else {
-				//throw new NoPortfolioByUserException();  //create NoPortfolioByUser(); exception
+				throw new NoPortfolioByUserException();
 			}
 		} else {
-			//throw new DataNotFoundException();  // create DataNotFoundException
+			throw new DataNotFoundException();
 		}
 		
 	}
 
 	@Override
-	public List<Stock> getAllStocks() {
+	public List<Stock> getAllStocks() throws AllStocksAreEmptyException {
 		List<Stock> allStocks = stockRepo.findAll();
 		if(!(allStocks.isEmpty())) {
 			return allStocks;
 		} else {
-			//throw new AllStocksAreEmptyException(); // create AllStocksAreEmptyException
+			throw new AllStocksAreEmptyException();
 		}
-		return null;
 	}
 
 	@Override

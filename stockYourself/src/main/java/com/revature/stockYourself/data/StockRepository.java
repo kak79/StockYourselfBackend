@@ -10,7 +10,4 @@ import com.revature.stockYourself.beans.Stock;
 @Repository
 public interface StockRepository extends JpaRepository<Stock, Integer>{
 	public Stock findByName(String stockName);
-	
-
-
 }

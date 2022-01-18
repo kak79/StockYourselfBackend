@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.revature.stockYourself.exceptions.StockListWasEmptyException;
+
 public class Portfolio {
 
 	private int portfolioId;
@@ -88,7 +90,7 @@ public class Portfolio {
 		
 	}
 	
-	public void setPortfolioStocksToStocks(List<Stock> stocksToUpdate) {
+	public void setPortfolioStocksToStocks(List<Stock> stocksToUpdate) throws StockListWasEmptyException {
 		if (!(stocksToUpdate.isEmpty())) {
 			if(stocksToUpdate.get(0) != null) {
 				stock1 = stocksToUpdate.get(0);
@@ -106,7 +108,7 @@ public class Portfolio {
 				stock5 = stocksToUpdate.get(4);
 			}
 		} else {
-			// throw new StockListWasEmptyException(); //create StockListWasEmpty() exception
+			throw new StockListWasEmptyException();
 		}
 	}
 

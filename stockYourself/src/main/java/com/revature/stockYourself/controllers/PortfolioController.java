@@ -21,6 +21,8 @@ import com.revature.stockYourself.beans.User;
 import com.revature.stockYourself.exceptions.BadGetAllPortfolios;
 import com.revature.stockYourself.exceptions.NoPortfolioByStock;
 import com.revature.stockYourself.exceptions.NoPortfolioByUsernameException;
+import com.revature.stockYourself.exceptions.PortfolioIdUserIdConflictException;
+import com.revature.stockYourself.exceptions.PortfolioToUpdateIsNullException;
 import com.revature.stockYourself.services.AdminService;
 import com.revature.stockYourself.services.UserService;
 
@@ -104,7 +106,7 @@ public class PortfolioController {
 	
 	
 	@PutMapping(path="/myportfolio")
-	public ResponseEntity<Void> updatePortfolio(@RequestBody User loggedInUser, @RequestBody Portfolio portfolioToUpdate) {
+	public ResponseEntity<Void> updatePortfolio(@RequestBody User loggedInUser, @RequestBody Portfolio portfolioToUpdate) throws PortfolioIdUserIdConflictException, PortfolioToUpdateIsNullException {
 		log.info("Updating Portfolio");
 		log.debug("Failed to update portfolio: " +portfolioToUpdate);
 		
