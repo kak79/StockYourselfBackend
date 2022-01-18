@@ -19,6 +19,11 @@ CREATE table user_role (
 
 CREATE table portfolio (
 portfolio_id serial PRIMARY key
+stock1 varchar(5),
+stock2 varchar(5),
+stock3 varchar(5),
+stock4 varchar(5),
+stock5 varchar(5)
 );
 
 
