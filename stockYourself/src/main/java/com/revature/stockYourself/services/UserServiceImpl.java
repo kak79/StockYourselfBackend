@@ -1,10 +1,10 @@
 package com.revature.stockYourself.services;
 
 import java.util.Map;
+import java.util.Set;
 
-
-
-
+import com.revature.stockYourself.beans.Portfolio;
+import com.revature.stockYourself.beans.StockString;
 import com.revature.stockYourself.beans.User;
 import com.revature.stockYourself.exceptions.IncorrectCredentialsException;
 import com.revature.stockYourself.exceptions.UsernameAlreadyExistsException;
@@ -13,7 +13,9 @@ import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.Interval;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
@@ -55,6 +57,21 @@ public class UserServiceImpl implements UserService {
 		Stock stock = YahooFinance.get(stockname, from, to, Interval.WEEKLY);
 		return stock;
 	}
+	
+	@Override
+	public Portfolio addStockToPortfolio(User user,StockString stock) {
+		Portfolio port = user.getPortfolio();
+		port.getPortfolioStingStocks().add(stock);
+		return port;
+	}
+	
+	@Override
+	public Portfolio removeStockToPortfolio(User user,StockString stock) {
+		Portfolio port = user.getPortfolio();
+		port.getPortfolioStingStocks().remove(stock);
+		return port;
+	}
+	
 	
 	
 

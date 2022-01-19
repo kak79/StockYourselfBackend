@@ -1,4 +1,7 @@
-package com.revature.stockYourself.beans;import java.util.List;
+package com.revature.stockYourself.beans;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,10 +18,11 @@ public class Portfolio {
 	@JoinTable(name="portfolio_stock",
 			joinColumns = @JoinColumn(name="portfolo_id"),
 			inverseJoinColumns = @JoinColumn(name="stock_string"))
-	private List<String> portfolioStingStocks;
+	private List<StockString> portfolioStingStocks;
 	
 	public Portfolio() {
 		portfolioId = 0;
+		portfolioStingStocks = new ArrayList<>();
 	}	
 	
 	public int getPortfolioId() {
@@ -27,8 +31,20 @@ public class Portfolio {
 	
 	public void setPortfolioId(int portfolioId) {
 		this.portfolioId = portfolioId;
-	}	
+	}
 	
+	
+	
+	public List<StockString> getPortfolioStingStocks() {
+		return portfolioStingStocks;
+	}
+
+	public void setPortfolioStingStocks(List<StockString> portfolioStingStocks) {
+		this.portfolioStingStocks = portfolioStingStocks;
+	}
+	
+	
+
 	@Override
 	public String toString() {
 		return "Portfolio [portfolioId=" + portfolioId + "]";
