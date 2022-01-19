@@ -58,22 +58,18 @@ public class UserServiceImpl implements UserService {
 		return stock;
 	}
 	
+	@Override
 	public Portfolio addStockToPortfolio(User user,StockString stock) {
 		Portfolio port = user.getPortfolio();
 		port.getPortfolioStingStocks().add(stock);
 		return port;
 	}
 	
+	@Override
 	public Portfolio removeStockToPortfolio(User user,StockString stock) {
 		Portfolio port = user.getPortfolio();
-		Portfolio portnew = new Portfolio();
-		port.getPortfolioStingStocks().forEach(st -> {
-			if (st!= stock) {
-				portnew.getPortfolioStingStocks().add(st);
-			}
-		});
-		user.setPortfolio(portnew);
-		return portnew;
+		port.getPortfolioStingStocks().remove(stock);
+		return port;
 	}
 	
 	
