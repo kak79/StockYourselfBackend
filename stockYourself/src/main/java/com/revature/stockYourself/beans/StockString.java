@@ -12,7 +12,6 @@ public class StockString {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int stockStringId;
-	@Column
 	private String stockString;
 	
 	public StockString() {

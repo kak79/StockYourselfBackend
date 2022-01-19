@@ -4,10 +4,23 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+@Entity
 public class Post {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int postId;
 	private String postContent;
+	@DateTimeFormat
 	private LocalDate creationDate;
+	@DateTimeFormat
 	private LocalTime creationTime;
 	private User creator;
 	
