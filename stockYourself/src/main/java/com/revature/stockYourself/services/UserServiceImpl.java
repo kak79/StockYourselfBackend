@@ -1,10 +1,9 @@
 package com.revature.stockYourself.services;
 
 import java.util.Map;
+import java.util.Set;
 
-
-
-
+import com.revature.stockYourself.beans.StockString;
 import com.revature.stockYourself.beans.User;
 import com.revature.stockYourself.exceptions.IncorrectCredentialsException;
 import com.revature.stockYourself.exceptions.UsernameAlreadyExistsException;
@@ -55,6 +54,11 @@ public class UserServiceImpl implements UserService {
 		Stock stock = YahooFinance.get(stockname, from, to, Interval.WEEKLY);
 		return stock;
 	}
+	
+	public Set<String> addStockToPortfolio(User user,StockString stock) {
+		user.getPortfolio().
+	}
+	
 	
 	
 
