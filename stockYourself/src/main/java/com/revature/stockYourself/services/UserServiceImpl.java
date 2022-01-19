@@ -13,7 +13,7 @@ import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.Interval;
 
-import java.util.ArrayList;
+
 import java.util.Calendar;
 import java.util.List;
 
