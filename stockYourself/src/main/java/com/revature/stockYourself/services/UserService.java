@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.revature.stockYourself.beans.Portfolio;
+import com.revature.stockYourself.beans.Post;
 import com.revature.stockYourself.beans.StockString;
 import com.revature.stockYourself.beans.User;
 import com.revature.stockYourself.exceptions.IncorrectCredentialsException;
@@ -22,4 +23,9 @@ public interface UserService {
 	public Stock getStockHistoryWeekly(String stockname,int years) throws Exception;
 	public Portfolio addStockToPortfolio(User user,StockString stock);
 	public Portfolio removeStockToPortfolio(User user,StockString stock);
+	public Post createPost(Post newPost);
+	public Post updatePost(Post existingPost);
+	public List<Post> getAllPosts();
+	public List<Post> getAllPostsByCreator(User creator);
+	public List<Post> getAllPostsByPortfolio(Portfolio portfolioPostedOn);
 }

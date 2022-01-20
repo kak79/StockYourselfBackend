@@ -3,9 +3,16 @@ package com.revature.stockYourself.services;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.revature.stockYourself.beans.Portfolio;
+import com.revature.stockYourself.beans.Post;
 import com.revature.stockYourself.beans.StockString;
 import com.revature.stockYourself.beans.User;
+import com.revature.stockYourself.data.PortfolioRepository;
+import com.revature.stockYourself.data.PostRepository;
+import com.revature.stockYourself.data.UserRepository;
 import com.revature.stockYourself.exceptions.IncorrectCredentialsException;
 import com.revature.stockYourself.exceptions.UsernameAlreadyExistsException;
 
@@ -13,12 +20,25 @@ import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.Interval;
 
-
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
+	private UserRepository userRepo;
+	private PostRepository postRepo;
+	private PortfolioRepository portfolioRepo;
+	
+	@Autowired
+	public UserServiceImpl(UserRepository userRepo,
+				PostRepository postRepo,
+				PortfolioRepository portfolioRepo) {
+		this.userRepo = userRepo;
+		this.postRepo = postRepo;
+		this.portfolioRepo = portfolioRepo;
+	}
+	
 	@Override
 	public User register(User newUser) throws UsernameAlreadyExistsException {
 		// TODO Auto-generated method stub
@@ -27,8 +47,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User logIn(String username, String password) throws IncorrectCredentialsException {
-		// TODO Auto-generated method stub
-		return null;
+		User userFromDatabase = userRepo.findByUsername(username);
+		if (userFromDatabase != null && userFromDatabase.getPasswrd().equals(password)) {
+			return userFromDatabase;
+		} else {
+			throw new IncorrectCredentialsException();
+		}
+
 	}
 
 	@Override
@@ -80,9 +105,84 @@ public class UserServiceImpl implements UserService {
 		return port;
 	}
 
-	
-	
-	
-	
+	@Override
+	public Map<String, Stock> getListOfStocks(List<StockString> listOfStocknames) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	@Transactional
+	public Post createPost(Post newPost) {
+		 if (newPost != null) {
+			 postRepo.save(newPost);
+		 }
+		return null;
+	}
+
+	@Override
+	@Transactional
+	public Post updatePost(Post existingPost) {
+		if(existingPost != null) {
+			Post post = postRepo.findByPostId(existingPost.getPostId());
+			if(post != null) {
+				postRepo.save(existingPost);
+				Post postOutput = postRepo.getById(existingPost.getPostId());
+				return postOutput;
+				
+			} else {
+//				throw new PostDoesNotExistInDatabaseException();
+			}
+		} else { 
+//			throw new PostWasNullException();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Post> getAllPosts() {
+		List<Post> listOfAllPosts = postRepo.findAll();
+		if (!(listOfAllPosts.isEmpty())) {
+			return listOfAllPosts;
+		} else {
+//			throw new CouldNotFindAllPostsException();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Post> getAllPostsByCreator(User creator) {
+		List<Post> allPostByCreator = new ArrayList<Post>();
+		if (creator != null) {
+			List<Post> allPost = postRepo.findAll();
+			for ( Post post : allPost) {
+				if (post.getCreator().getUserId() == creator.getUserId()) {
+					allPostByCreator.add(post);
+				}
+			}
+		} else {
+//			throw new CreatorWasNullException();
+		}
+			return allPostByCreator;
+		
+	}
+
+	@Override
+	public List<Post> getAllPostsByPortfolio(Portfolio portfolioPostedOn) {
+		List<Post> allPostByPortfolio = new ArrayList<Post>();
+		if (portfolioPostedOn != null) {
+			List<Post> allPost = postRepo.findAll();
+			for ( Post post : allPost) {
+				if (post.getPortfolioPostedOn().getPortfolioId() == portfolioPostedOn.getPortfolioId()) {
+					allPostByPortfolio.add(post);
+				}
+			}
+		} else {
+//			throw new CreatorWasNullException();
+		}
+			return allPostByPortfolio;
+		
+	}
+		
 
 }
