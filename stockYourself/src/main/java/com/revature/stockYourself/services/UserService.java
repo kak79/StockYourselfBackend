@@ -28,4 +28,5 @@ public interface UserService {
 	public List<Post> getAllPosts();
 	public List<Post> getAllPostsByCreator(User creator);
 	public List<Post> getAllPostsByPortfolio(Portfolio portfolioPostedOn);
+	public Map<String, Stock> getListOfStocks(String[] listOfStocknames) throws Exception;
 }
