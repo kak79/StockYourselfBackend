@@ -3,9 +3,14 @@ package com.revature.stockYourself.services;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.revature.stockYourself.beans.Portfolio;
 import com.revature.stockYourself.beans.StockString;
 import com.revature.stockYourself.beans.User;
+import com.revature.stockYourself.data.PortfolioRepository;
+import com.revature.stockYourself.data.PostRepository;
+import com.revature.stockYourself.data.UserRepository;
 import com.revature.stockYourself.exceptions.IncorrectCredentialsException;
 import com.revature.stockYourself.exceptions.UsernameAlreadyExistsException;
 
@@ -19,6 +24,19 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
+	private UserRepository userRepo;
+	private PostRepository postRepo;
+	private PortfolioRepository portfolioRepo;
+	
+	@Autowired
+	public UserServiceImpl(UserRepository userRepo,
+				PostRepository postRepo,
+				PortfolioRepository portfolioRepo) {
+		this.userRepo = userRepo;
+		this.postRepo = postRepo;
+		this.portfolioRepo = portfolioRepo;
+	}
+	
 	@Override
 	public User register(User newUser) throws UsernameAlreadyExistsException {
 		// TODO Auto-generated method stub
@@ -27,8 +45,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User logIn(String username, String password) throws IncorrectCredentialsException {
-		// TODO Auto-generated method stub
-		return null;
+		User userFromDatabase = userRepo.findByUsername(username);
+		if (userFromDatabase != null && userFromDatabase.getPasswrd().equals(password)) {
+			return userFromDatabase;
+		} else {
+			throw new IncorrectCredentialsException();
+		}
+
 	}
 
 	@Override

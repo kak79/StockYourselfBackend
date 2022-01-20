@@ -17,6 +17,7 @@ import com.revature.stockYourself.beans.StockString;
 import com.revature.stockYourself.beans.User;
 import com.revature.stockYourself.services.UserService;
 
+
 import yahoofinance.Stock;
 
 @RestController
@@ -30,6 +31,31 @@ public class UsersController {
 		this.userServ=userServ;
 	}
 	
+  // POST to /users/auth
+	@PostMapping(path="/auth")
+	public ResponseEntity<String> logIn(@RequestBody Map<String, String> credentials) {
+		String username = credentials.get("username");
+		String password = credentials.get("password");
+			
+		try {
+			User user = userServ.logIn(username, password);
+			String token = Integer.toString(user.getUserId());
+			return ResponseEntity.ok(token);
+		} catch (IncorrectCredentialsException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+		
+	// GET to /users/{userId}/auth
+	@GetMapping(path="/{userId}/auth")
+	public ResponseEntity<User> checkLogin(@PathVariable int userId) {
+		User loggedInUser = userServ.getUserById(userId);
+		if (loggedInUser!=null) {
+			return ResponseEntity.ok(loggedInUser);
+		} else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+	}
 	
 	@PostMapping(path="/{userId}/portfolio")
 	public ResponseEntity<Map<String,Stock>> viewMyPortfolio(@RequestBody User userPort,@PathVariable int userId) throws Exception {
