@@ -4,15 +4,20 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
+@Table(name="post")
 public class Post {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,7 +28,14 @@ public class Post {
 	private LocalDate creationDate;
 	@DateTimeFormat
 	private LocalTime creationTime;
+	@ManyToMany
+	@JoinTable(name="user_post",
+			joinColumns = @JoinColumn(name="post_id"),
+			inverseJoinColumns = @JoinColumn(name="user_id"))
 	private User creator;
+	@ManyToOne
+	@JoinTable(name="portfolio_id")
+	//do we need something similar to lines 35&36?
 	private Portfolio portfolioPostedOn;
 	
 	public Post() {

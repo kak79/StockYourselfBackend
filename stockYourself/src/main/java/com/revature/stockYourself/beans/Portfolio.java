@@ -8,11 +8,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;@Entity
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="portfolio")
 public class Portfolio {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int portfolioId;
+	private String portfolioName;
 	// private double points;
 	@ManyToMany
 	@JoinTable(name="portfolio_stock",
@@ -22,6 +27,7 @@ public class Portfolio {
 	
 	public Portfolio() {
 		portfolioId = 0;
+		portfolioName = " ";
 		portfolioStingStocks = new ArrayList<>();
 	}	
 	
@@ -35,6 +41,14 @@ public class Portfolio {
 	
 	
 	
+	public String getPortfolioName() {
+		return portfolioName;
+	}
+
+	public void setPortfolioName(String portfolioName) {
+		this.portfolioName = portfolioName;
+	}
+
 	public List<StockString> getPortfolioStingStocks() {
 		return portfolioStingStocks;
 	}
@@ -42,19 +56,18 @@ public class Portfolio {
 	public void setPortfolioStingStocks(List<StockString> portfolioStingStocks) {
 		this.portfolioStingStocks = portfolioStingStocks;
 	}
-	
-	
 
 	@Override
 	public String toString() {
-		return "Portfolio [portfolioId=" + portfolioId + "]";
-	}	
-	
+		return "Portfolio [portfolioId=" + portfolioId + ", portfolioName=" + portfolioName + ", portfolioStingStocks="
+				+ portfolioStingStocks + "]";
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(portfolioId);
-	}	
-	
+		return Objects.hash(portfolioId, portfolioName, portfolioStingStocks);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -64,9 +77,12 @@ public class Portfolio {
 		if (getClass() != obj.getClass())
 			return false;
 		Portfolio other = (Portfolio) obj;
-		return portfolioId == other.portfolioId;
+		return portfolioId == other.portfolioId && Objects.equals(portfolioName, other.portfolioName)
+				&& Objects.equals(portfolioStingStocks, other.portfolioStingStocks);
 	}
 	
+	
+
 	
 	
 }

@@ -1,7 +1,10 @@
 package com.revature.stockYourself.services;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,10 +23,6 @@ import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.Interval;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 public class UserServiceImpl implements UserService {
 
 	private UserRepository userRepo;
@@ -41,8 +40,14 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User register(User newUser) throws UsernameAlreadyExistsException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			newUser = userRepo.save(newUser);
+			return newUser;
+		} catch (Exception e) {
+			if (e.getMessage()!=null && e.getMessage().contains("unique"))
+				throw new UsernameAlreadyExistsException();
+			else return null;
+		}
 	}
 
 	@Override
@@ -58,8 +63,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<User> usr = userRepo.findById(id);
+		if (usr.isPresent()) return usr.get();
+		else return null;
 	}
 
 	@Override
@@ -69,8 +75,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Map<String, Stock> getListOfStocks(String[] listOfStocknames) throws Exception {
-		Map<String, Stock> stocks = YahooFinance.get(listOfStocknames);
+	public Map<String, Stock> getListOfStocks(List<StockString> listOfStocknames) throws Exception {
+		String[] stockString= new String [] {};
+		
+		listOfStocknames.forEach(stock ->{
+			stock.getStockString();
+			for(int i=0;i<=listOfStocknames.size();i++) {
+				stockString[i]= stock.getStockString();
+			}
+			});
+		Map<String, Stock> stocks = YahooFinance.get(stockString);
 		return stocks;
 	}
 
@@ -97,11 +111,7 @@ public class UserServiceImpl implements UserService {
 		return port;
 	}
 
-	@Override
-	public Map<String, Stock> getListOfStocks(List<StockString> listOfStocknames) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	@Transactional

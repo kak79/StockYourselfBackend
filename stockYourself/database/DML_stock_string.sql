@@ -1,3 +1,4 @@
+
 insert into stock_string (stock_name) values ('AACG');
 insert into stock_string (stock_name) values ('AACI');
 insert into stock_string (stock_name) values ('AACIU');

@@ -2,7 +2,6 @@ package com.revature.stockYourself.services;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.revature.stockYourself.beans.Portfolio;
 import com.revature.stockYourself.beans.Post;
@@ -12,7 +11,6 @@ import com.revature.stockYourself.exceptions.IncorrectCredentialsException;
 import com.revature.stockYourself.exceptions.UsernameAlreadyExistsException;
 
 import yahoofinance.Stock;
-import yahoofinance.YahooFinance;
 
 public interface UserService {
 	public User register(User newUser) throws UsernameAlreadyExistsException;
