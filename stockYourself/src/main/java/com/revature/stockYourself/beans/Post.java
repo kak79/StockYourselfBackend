@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -35,6 +33,9 @@ public class Post {
 			joinColumns = @JoinColumn(name="post_id"),
 			inverseJoinColumns = @JoinColumn(name="user_id"))
 	private User creator;
+	@ManyToOne
+	@JoinTable(name="portfolio_id")
+	//do we need something similar to lines 35&36?
 	private Portfolio portfolioPostedOn;
 	
 	public Post() {

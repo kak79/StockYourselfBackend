@@ -20,7 +20,6 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userId;
-	
 	private String firstName;
 	private String lastName;
 	private String username;
@@ -44,7 +43,6 @@ public class User {
 		email = "first@123.com";
 		phoneNumber = "(123)456-7890";
 		role = new Role();
-		
 		portfolio = new Portfolio();
 	}
 

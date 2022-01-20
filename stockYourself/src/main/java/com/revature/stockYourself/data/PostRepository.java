@@ -10,7 +10,6 @@ import com.revature.stockYourself.beans.User;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
 	public Post findByPostId(int postId);
-	public Post findByPostContent(String postContent);
 	public Post findByPortfolioPostedOn(Portfolio portfolio);
 	public Post findByCreator(User creator);
 }
