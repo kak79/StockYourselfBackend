@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.stockYourself.beans.Portfolio;
@@ -22,7 +23,7 @@ import com.revature.stockYourself.exceptions.UsernameAlreadyExistsException;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.Interval;
-
+@Service
 public class UserServiceImpl implements UserService {
 
 	private UserRepository userRepo;

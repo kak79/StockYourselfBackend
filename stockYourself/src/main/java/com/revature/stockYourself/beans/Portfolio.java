@@ -12,7 +12,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="portfolio")
 public class Portfolio {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

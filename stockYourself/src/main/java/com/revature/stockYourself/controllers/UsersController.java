@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +19,7 @@ import com.revature.stockYourself.beans.StockString;
 import com.revature.stockYourself.beans.User;
 import com.revature.stockYourself.exceptions.IncorrectCredentialsException;
 import com.revature.stockYourself.services.UserService;
-
+import com.revature.stockYourself.services.UserServiceImpl;
 
 import yahoofinance.Stock;
 
@@ -59,7 +60,7 @@ public class UsersController {
 		}
 	}
 	
-	@PostMapping(path="/{userId}/portfolio")
+	@GetMapping(path="/{userId}/portfolio")
 	public ResponseEntity<Map<String,Stock>> viewMyPortfolio(@RequestBody User userPort,@PathVariable int userId) throws Exception {
 		Map<String, Stock> stock = userServ.getListOfStocks(userPort.getPortfolio().getPortfolioStingStocks());
 		if (stock != null) {
@@ -69,7 +70,7 @@ public class UsersController {
 		}
 	}
 	
-	@PostMapping(path="/{userId}/portfolio")
+	@PutMapping(path="/{userId}/portfolio")
 	public ResponseEntity<Portfolio> removeStockFromPortfolio(@RequestBody User user,@RequestBody StockString stock) throws Exception {
 		
 		if(stock != null && user != null) {
@@ -80,8 +81,8 @@ public class UsersController {
 		}
 	}
 	
-	@PostMapping(path="/{userId}")
-	public ResponseEntity<Portfolio> addStockToPortfolio(@RequestBody User user,@RequestBody StockString stock) throws Exception {
+	@PostMapping(path="/{userId}/auth")
+	public ResponseEntity<Portfolio> addStockToPortfolio(@RequestBody User user,@RequestBody StockString stock, @PathVariable int userId) throws Exception {
 		
 		if(stock != null && user != null) {
 			Portfolio port = userServ.addStockToPortfolio(user, stock);
