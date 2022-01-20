@@ -1,5 +1,6 @@
 package com.revature.stockYourself.services;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,7 +18,7 @@ public interface UserService {
 	public User logIn(String username, String password) throws IncorrectCredentialsException;
 	public User getUserById(int id);
 	public yahoofinance.Stock getStockByStockname(String stockname) throws Exception;
-	public Map<String, Stock> getListOfStocks(String[] listOfStocknames)throws Exception;
+	public Map<String, Stock> getListOfStocks(List<StockString> listOfStocknames)throws Exception;
 	public Stock getStockHistoryWeekly(String stockname,int years) throws Exception;
 	public Portfolio addStockToPortfolio(User user,StockString stock);
 	public Portfolio removeStockToPortfolio(User user,StockString stock);
