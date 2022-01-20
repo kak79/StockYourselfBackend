@@ -1,8 +1,3 @@
-INSERT INTO user_role (role_name) 
-VALUES
-	('Admin'),
-	('user');
-
 
 insert into stock_string (stock_name) values ('AACG');
 insert into stock_string (stock_name) values ('AACI');
