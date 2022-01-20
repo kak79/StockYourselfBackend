@@ -64,7 +64,7 @@ public class UsersController {
 		Map<String, Stock> stock = userServ.getListOfStocks(userPort.getPortfolio().getPortfolioStingStocks());
 		if (stock != null) {
 			return ResponseEntity.ok(stock);
-		}else {
+		} else {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 	}

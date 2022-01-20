@@ -16,7 +16,12 @@ import com.revature.stockYourself.beans.User;
 import com.revature.stockYourself.data.PortfolioRepository;
 import com.revature.stockYourself.data.PostRepository;
 import com.revature.stockYourself.data.UserRepository;
+import com.revature.stockYourself.exceptions.CouldNotFindAllPostsException;
+import com.revature.stockYourself.exceptions.CreatorWasNullException;
 import com.revature.stockYourself.exceptions.IncorrectCredentialsException;
+import com.revature.stockYourself.exceptions.PortfolioEnteredWasNull;
+import com.revature.stockYourself.exceptions.PostDoesNotExistInDatabaseException;
+import com.revature.stockYourself.exceptions.PostEnteredWasNullException;
 import com.revature.stockYourself.exceptions.UsernameAlreadyExistsException;
 
 import yahoofinance.Stock;
@@ -124,7 +129,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public Post updatePost(Post existingPost) {
+	public Post updatePost(Post existingPost) throws PostDoesNotExistInDatabaseException, PostEnteredWasNullException {
 		if(existingPost != null) {
 			Post post = postRepo.findByPostId(existingPost.getPostId());
 			if(post != null) {
@@ -133,27 +138,25 @@ public class UserServiceImpl implements UserService {
 				return postOutput;
 				
 			} else {
-//				throw new PostDoesNotExistInDatabaseException();
+				throw new PostDoesNotExistInDatabaseException();
 			}
 		} else { 
-//			throw new PostWasNullException();
+			throw new PostEnteredWasNullException();
 		}
-		return null;
 	}
 
 	@Override
-	public List<Post> getAllPosts() {
+	public List<Post> getAllPosts() throws CouldNotFindAllPostsException {
 		List<Post> listOfAllPosts = postRepo.findAll();
 		if (!(listOfAllPosts.isEmpty())) {
 			return listOfAllPosts;
 		} else {
-//			throw new CouldNotFindAllPostsException();
+			throw new CouldNotFindAllPostsException();
 		}
-		return null;
 	}
 
 	@Override
-	public List<Post> getAllPostsByCreator(User creator) {
+	public List<Post> getAllPostsByCreator(User creator) throws CreatorWasNullException {
 		List<Post> allPostByCreator = new ArrayList<Post>();
 		if (creator != null) {
 			List<Post> allPost = postRepo.findAll();
@@ -163,14 +166,14 @@ public class UserServiceImpl implements UserService {
 				}
 			}
 		} else {
-//			throw new CreatorWasNullException();
+			throw new CreatorWasNullException();
 		}
 			return allPostByCreator;
 		
 	}
 
 	@Override
-	public List<Post> getAllPostsByPortfolio(Portfolio portfolioPostedOn) {
+	public List<Post> getAllPostsByPortfolio(Portfolio portfolioPostedOn) throws PortfolioEnteredWasNull {
 		List<Post> allPostByPortfolio = new ArrayList<Post>();
 		if (portfolioPostedOn != null) {
 			List<Post> allPost = postRepo.findAll();
@@ -180,10 +183,16 @@ public class UserServiceImpl implements UserService {
 				}
 			}
 		} else {
-//			throw new CreatorWasNullException();
+			throw new PortfolioEnteredWasNull();
 		}
 			return allPostByPortfolio;
 		
+	}
+
+	@Override
+	public Map<String, Stock> getListOfStocks(String[] listOfStocknames) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 		
 

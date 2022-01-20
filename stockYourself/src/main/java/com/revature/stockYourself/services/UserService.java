@@ -7,7 +7,12 @@ import com.revature.stockYourself.beans.Portfolio;
 import com.revature.stockYourself.beans.Post;
 import com.revature.stockYourself.beans.StockString;
 import com.revature.stockYourself.beans.User;
+import com.revature.stockYourself.exceptions.CouldNotFindAllPostsException;
+import com.revature.stockYourself.exceptions.CreatorWasNullException;
 import com.revature.stockYourself.exceptions.IncorrectCredentialsException;
+import com.revature.stockYourself.exceptions.PortfolioEnteredWasNull;
+import com.revature.stockYourself.exceptions.PostDoesNotExistInDatabaseException;
+import com.revature.stockYourself.exceptions.PostEnteredWasNullException;
 import com.revature.stockYourself.exceptions.UsernameAlreadyExistsException;
 
 import yahoofinance.Stock;
@@ -22,9 +27,9 @@ public interface UserService {
 	public Portfolio addStockToPortfolio(User user,StockString stock);
 	public Portfolio removeStockToPortfolio(User user,StockString stock);
 	public Post createPost(Post newPost);
-	public Post updatePost(Post existingPost);
-	public List<Post> getAllPosts();
-	public List<Post> getAllPostsByCreator(User creator);
-	public List<Post> getAllPostsByPortfolio(Portfolio portfolioPostedOn);
+	public Post updatePost(Post existingPost) throws PostDoesNotExistInDatabaseException, PostEnteredWasNullException;
+	public List<Post> getAllPosts() throws CouldNotFindAllPostsException;
+	public List<Post> getAllPostsByCreator(User creator) throws CreatorWasNullException;
+	public List<Post> getAllPostsByPortfolio(Portfolio portfolioPostedOn) throws PortfolioEnteredWasNull;
 	public Map<String, Stock> getListOfStocks(String[] listOfStocknames) throws Exception;
 }
