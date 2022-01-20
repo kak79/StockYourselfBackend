@@ -4,8 +4,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.stockYourself.beans.Portfolio;
+import com.revature.stockYourself.beans.Post;
 import com.revature.stockYourself.beans.StockString;
 import com.revature.stockYourself.beans.User;
 import com.revature.stockYourself.data.PortfolioRepository;
@@ -18,7 +20,7 @@ import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.Interval;
 
-
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -94,8 +96,85 @@ public class UserServiceImpl implements UserService {
 		port.getPortfolioStingStocks().remove(stock);
 		return port;
 	}
-	
-	
-	
+
+	@Override
+	public Map<String, Stock> getListOfStocks(List<StockString> listOfStocknames) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	@Transactional
+	public Post createPost(Post newPost) {
+		 if (newPost != null) {
+			 postRepo.save(newPost);
+		 }
+		return null;
+	}
+
+	@Override
+	@Transactional
+	public Post updatePost(Post existingPost) {
+		if(existingPost != null) {
+			Post post = postRepo.findByPostId(existingPost.getPostId());
+			if(post != null) {
+				postRepo.save(existingPost);
+				Post postOutput = postRepo.getById(existingPost.getPostId());
+				return postOutput;
+				
+			} else {
+//				throw new PostDoesNotExistInDatabaseException();
+			}
+		} else { 
+//			throw new PostWasNullException();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Post> getAllPosts() {
+		List<Post> listOfAllPosts = postRepo.findAll();
+		if (!(listOfAllPosts.isEmpty())) {
+			return listOfAllPosts;
+		} else {
+//			throw new CouldNotFindAllPostsException();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Post> getAllPostsByCreator(User creator) {
+		List<Post> allPostByCreator = new ArrayList<Post>();
+		if (creator != null) {
+			List<Post> allPost = postRepo.findAll();
+			for ( Post post : allPost) {
+				if (post.getCreator().getUserId() == creator.getUserId()) {
+					allPostByCreator.add(post);
+				}
+			}
+		} else {
+//			throw new CreatorWasNullException();
+		}
+			return allPostByCreator;
+		
+	}
+
+	@Override
+	public List<Post> getAllPostsByPortfolio(Portfolio portfolioPostedOn) {
+		List<Post> allPostByPortfolio = new ArrayList<Post>();
+		if (portfolioPostedOn != null) {
+			List<Post> allPost = postRepo.findAll();
+			for ( Post post : allPost) {
+				if (post.getPortfolioPostedOn().getPortfolioId() == portfolioPostedOn.getPortfolioId()) {
+					allPostByPortfolio.add(post);
+				}
+			}
+		} else {
+//			throw new CreatorWasNullException();
+		}
+			return allPostByPortfolio;
+		
+	}
+		
 
 }
