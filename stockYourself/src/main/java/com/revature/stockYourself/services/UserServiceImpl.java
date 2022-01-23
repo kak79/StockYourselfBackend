@@ -74,20 +74,25 @@ public class UserServiceImpl implements UserService {
 		if (usr.isPresent()) return usr.get();
 		else return null;
 	}
-	
-	
+
 	/**
 	 * 
 	 * public static Stock get(String symbol) throws IOException {
-       		return YahooFinance.get(symbol, false);
+       		return YahooFinance.get(symbol, true);
 	   }
 	   
 	   
-     * Same as the <code>get(String)</code> method, but with the option to include
+     * Same as the <code>YahooFinance.get(String)</code> method, but with the option to include
      * historical stock quote data. Including historical data will cause the {@link Stock}
      * object's member field {@link yahoofinance.histquotes.HistoricalQuote} to be filled in
      * with the default past year term at monthly intervals.
      * Returns null if the data can't be retrieved from Yahoo Finance.
+     * 
+     * this also uses our StockData bean and the StockString bean for the symbol. it retrieves 
+     * stock name
+     * price
+     * change in price
+     * currency value
      * 
      * @param symbol                the symbol of the stock for which you want to retrieve information
      * @param includeHistorical     indicates if the historical quotes should be included.
@@ -95,17 +100,27 @@ public class UserServiceImpl implements UserService {
      * @throws java.io.IOException when there's a connection problem
      */
 	@Override
-	public Stock getStock(String stockname) throws IOException {
-		return YahooFinance.get(stockname.toUpperCase(),true);
-	}
-	
-	@Override
 	public StockData getStockInfo(StockString stockName)throws Exception{
 		String stockString = stockName.getStockString();
 		Stock stock = YahooFinance.get(stockString, true);
 		return new StockData(stock.getName(),stock.getQuote().getPrice(),stock.getQuote().getChange(),stock.getCurrency());
 	}
 
+	
+	/**
+     * Same as the <code>YahooFinance.get(String)</code> method, 
+     * Returns null if the data can't be retrieved from Yahoo Finance.
+     * 
+     * @param symbol                the symbol of the stock for which you want to retrieve information
+     * @param includeHistorical     indicates if the historical quotes should be included.
+     * @return                      a {@link Stock} object containing the requested information
+     * @throws java.io.IOException when there's a connection problem
+     
+    public static Stock get(String symbol, boolean includeHistorical) throws IOException {
+        Map<String, Stock> result = YahooFinance.getQuotes(symbol, includeHistorical);
+        return result.get(symbol.toUpperCase());
+    }
+    
 	@Override
 	public Map<String,Stock> getListOfStocks(Portfolio port) throws Exception {
 		List<StockString> listOfStocknames = port.getPortfolioStringStocks();
@@ -119,8 +134,22 @@ public class UserServiceImpl implements UserService {
 			});
 		Map<String, Stock> stocks = YahooFinance.get(stockString);
 		return stocks;
+		=============================================================
+		=============================================================
+	}*/
+	
+	
+	
+	@Override
+	public List<StockString> getPortfolio(Portfolio port) {
+		List<StockString> stocks = new ArrayList<StockString>();
+		if(port != null) {
+			stocks.forEach(stock ->{
+				stockStringRepo.findByStockName(stock);
+			});
+		}
+		return null;
 	}
-
 	
 	@Override
 	@Transactional
