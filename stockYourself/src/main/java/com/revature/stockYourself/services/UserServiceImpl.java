@@ -1,5 +1,6 @@
 package com.revature.stockYourself.services;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -12,10 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.stockYourself.beans.Portfolio;
 import com.revature.stockYourself.beans.Post;
+import com.revature.stockYourself.beans.StockData;
 import com.revature.stockYourself.beans.StockString;
 import com.revature.stockYourself.beans.User;
 import com.revature.stockYourself.data.PortfolioRepository;
 import com.revature.stockYourself.data.PostRepository;
+import com.revature.stockYourself.data.StockStringRepository;
 import com.revature.stockYourself.data.UserRepository;
 import com.revature.stockYourself.exceptions.IncorrectCredentialsException;
 import com.revature.stockYourself.exceptions.UsernameAlreadyExistsException;
@@ -29,14 +32,17 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepo;
 	private PostRepository postRepo;
 	private PortfolioRepository portfolioRepo;
+	private StockStringRepository stockStringRepo;
 	
 	@Autowired
 	public UserServiceImpl(UserRepository userRepo,
 				PostRepository postRepo,
-				PortfolioRepository portfolioRepo) {
+				PortfolioRepository portfolioRepo,
+				StockStringRepository stockStringRepo) {
 		this.userRepo = userRepo;
 		this.postRepo = postRepo;
 		this.portfolioRepo = portfolioRepo;
+		this.stockStringRepo = stockStringRepo;
 	}
 	
 	@Override
@@ -68,15 +74,41 @@ public class UserServiceImpl implements UserService {
 		if (usr.isPresent()) return usr.get();
 		else return null;
 	}
-
+	
+	
+	/**
+	 * 
+	 * public static Stock get(String symbol) throws IOException {
+       		return YahooFinance.get(symbol, false);
+	   }
+	   
+	   
+     * Same as the <code>get(String)</code> method, but with the option to include
+     * historical stock quote data. Including historical data will cause the {@link Stock}
+     * object's member field {@link yahoofinance.histquotes.HistoricalQuote} to be filled in
+     * with the default past year term at monthly intervals.
+     * Returns null if the data can't be retrieved from Yahoo Finance.
+     * 
+     * @param symbol                the symbol of the stock for which you want to retrieve information
+     * @param includeHistorical     indicates if the historical quotes should be included.
+     * @return                      a {@link Stock} object containing the requested information
+     * @throws java.io.IOException when there's a connection problem
+     */
 	@Override
-	public Stock getStockByStockname(String stockname) throws Exception {
-		Stock stock = YahooFinance.get(stockname);
-		return stock;
+	public Stock getStock(String stockname) throws IOException {
+		return YahooFinance.get(stockname.toUpperCase(),true);
+	}
+	
+	@Override
+	public StockData getStockInfo(StockString stockName)throws Exception{
+		String stockString = stockName.getStockString();
+		Stock stock = YahooFinance.get(stockString, true);
+		return new StockData(stock.getName(),stock.getQuote().getPrice(),stock.getQuote().getChange(),stock.getCurrency());
 	}
 
 	@Override
-	public Map<String, Stock> getListOfStocks(List<StockString> listOfStocknames) throws Exception {
+	public Map<String,Stock> getListOfStocks(Portfolio port) throws Exception {
+		List<StockString> listOfStocknames = port.getPortfolioStringStocks();
 		String[] stockString= new String [] {};
 		
 		listOfStocknames.forEach(stock ->{
@@ -89,27 +121,33 @@ public class UserServiceImpl implements UserService {
 		return stocks;
 	}
 
+	
 	@Override
-	public Stock getStockHistoryWeekly(String stockname,int years) throws Exception {
-		Calendar from = Calendar.getInstance();
-		Calendar to = Calendar.getInstance();
-		from.add(Calendar.YEAR, -years);
-		Stock stock = YahooFinance.get(stockname, from, to, Interval.WEEKLY);
-		return stock;
+	@Transactional
+	public Portfolio addStockToPortfolio(Portfolio ExistingPort,StockString stockString) {
+		if(stockString !=null && stockString != null) {
+			Portfolio port = portfolioRepo.findByPortfolioId(ExistingPort.getPortfolioId());
+			StockString stock = stockStringRepo.findByStockName(stockString);
+			port.getPortfolioStringStocks().add(stock);
+			portfolioRepo.save(port);
+		}
+		return null;
 	}
 	
 	@Override
-	public Portfolio addStockToPortfolio(User user,StockString stock) {
-		Portfolio port = user.getPortfolio();
-		port.getPortfolioStingStocks().add(stock);
-		return port;
-	}
-	
-	@Override
-	public Portfolio removeStockToPortfolio(User user,StockString stock) {
-		Portfolio port = user.getPortfolio();
-		port.getPortfolioStingStocks().remove(stock);
-		return port;
+	@Transactional
+	public Portfolio removeStockFromPortfolio(Portfolio ExistingPort,StockString remStockString) {
+		if(ExistingPort != null && remStockString !=null) {
+			Portfolio port = portfolioRepo.findByPortfolioId(ExistingPort.getPortfolioId());
+			StockString stockString = stockStringRepo.findByStockName(remStockString);
+			port.getPortfolioStringStocks().forEach(stock -> {
+				if(stockString.getStockString().equals(stock.getStockString())) {
+					portfolioRepo.deleteById(stockString.getStockStringId());
+				}
+			});
+			
+		}
+		return null;
 	}
 
 	

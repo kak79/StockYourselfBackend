@@ -48,12 +48,12 @@ public class Portfolio {
 		this.portfolioName = portfolioName;
 	}
 
-	public List<StockString> getPortfolioStingStocks() {
+	public List<StockString> getPortfolioStringStocks() {
 		return portfolioStingStocks;
 	}
 
-	public void setPortfolioStingStocks(List<StockString> portfolioStingStocks) {
-		this.portfolioStingStocks = portfolioStingStocks;
+	public void setPortfolioStringStocks(List<StockString> portfolioStringStocks) {
+		this.portfolioStingStocks = portfolioStringStocks;
 	}
 
 	@Override

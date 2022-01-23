@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.revature.stockYourself.beans.Portfolio;
 import com.revature.stockYourself.beans.StockString;
 import com.revature.stockYourself.beans.User;
@@ -60,9 +59,10 @@ public class UsersController {
 		}
 	}
 	
+	
 	@GetMapping(path="/{userId}/portfolio")
-	public ResponseEntity<Map<String,Stock>> viewMyPortfolio(@RequestBody User userPort,@PathVariable int userId) throws Exception {
-		Map<String, Stock> stock = userServ.getListOfStocks(userPort.getPortfolio().getPortfolioStingStocks());
+	public ResponseEntity<Map<String,Stock>> viewMyPortfolio(@RequestBody Portfolio port,@PathVariable int userId) throws Exception {
+		Map<String, Stock> stock = userServ.getListOfStocks(port.getPortfolioStringStocks());
 		if (stock != null) {
 			return ResponseEntity.ok(stock);
 		}else {
@@ -71,17 +71,17 @@ public class UsersController {
 	}
 	
 	@PutMapping(path="/{userId}/portfolio")
-	public ResponseEntity<Portfolio> removeStockFromPortfolio(@RequestBody User user,@RequestBody StockString stock) throws Exception {
+	public ResponseEntity<Portfolio> removeStockFromPortfolio(@RequestBody Portfolio port,@RequestBody StockString stock,@PathVariable int userId) throws Exception {
 		
 		if(stock != null && user != null) {
-			Portfolio port = userServ.removeStockToPortfolio(user, stock);
+			Portfolio port = userServ.removeStockToPortfolio(port, stock);
 			return ResponseEntity.ok(port);
 		}else {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 	}
 	
-	@PostMapping(path="/{userId}/auth")
+	@PostMapping(path="/{userId}/portfolio")
 	public ResponseEntity<Portfolio> addStockToPortfolio(@RequestBody User user,@RequestBody StockString stock, @PathVariable int userId) throws Exception {
 		
 		if(stock != null && user != null) {
