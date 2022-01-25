@@ -99,12 +99,12 @@ public class UserServiceImpl implements UserService {
      * @return                      a {@link Stock} object containing the requested information
      * @throws java.io.IOException when there's a connection problem
      */
-	@Override
+	/*@Override
 	public StockData getStockInfo(StockString stockName)throws Exception{
 		String stockString = stockName.getStockString();
 		Stock stock = YahooFinance.get(stockString, true);
 		return new StockData(stock.getName(),stock.getQuote().getPrice(),stock.getQuote().getChange(),stock.getCurrency());
-	}
+	}*/
 
 	
 	/**
@@ -145,7 +145,7 @@ public class UserServiceImpl implements UserService {
 		List<StockString> stocks = new ArrayList<StockString>();
 		if(port != null) {
 			stocks.forEach(stock ->{
-				stockStringRepo.findByStockName(stock);
+				stockStringRepo.findBystockString(stock);
 			});
 		}
 		return null;
@@ -156,7 +156,7 @@ public class UserServiceImpl implements UserService {
 	public Portfolio addStockToPortfolio(Portfolio ExistingPort,StockString stockString) {
 		if(stockString !=null && stockString != null) {
 			Portfolio port = portfolioRepo.findByPortfolioId(ExistingPort.getPortfolioId());
-			StockString stock = stockStringRepo.findByStockName(stockString);
+			StockString stock = stockStringRepo.findBystockString(stockString);
 			port.getPortfolioStringStocks().add(stock);
 			portfolioRepo.save(port);
 		}
@@ -168,7 +168,7 @@ public class UserServiceImpl implements UserService {
 	public Portfolio removeStockFromPortfolio(Portfolio ExistingPort,StockString remStockString) {
 		if(ExistingPort != null && remStockString !=null) {
 			Portfolio port = portfolioRepo.findByPortfolioId(ExistingPort.getPortfolioId());
-			StockString stockString = stockStringRepo.findByStockName(remStockString);
+			StockString stockString = stockStringRepo.findBystockString(remStockString);
 			port.getPortfolioStringStocks().forEach(stock -> {
 				if(stockString.getStockString().equals(stock.getStockString())) {
 					portfolioRepo.deleteById(stockString.getStockStringId());

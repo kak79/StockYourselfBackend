@@ -17,20 +17,13 @@ import yahoofinance.YahooFinance;
 
 @SpringBootApplication
 public class StockYourselfApplication {
-	private static UserService userServ;
 	public static void main(String[] args) throws Exception {
-		
-		
-		
-		Portfolio port = new Portfolio();
-		Map<String, Stock> stock = userServ.getListOfStocks(port.getPortfolioStringStocks());
-		System.out.println(stock.);
-//		SpringApplication.run(StockYourselfApplication.class, args);
-//	}
+			SpringApplication.run(StockYourselfApplication.class, args);
+		}
 //
 //	@Bean
 //	public YahooFinance corsConfigurer() {
 //		return new YahooFinance();
 	}
 
-}
+

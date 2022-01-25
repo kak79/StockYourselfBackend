@@ -65,14 +65,14 @@ public class UsersController {
 		}
 	}
 	
-	@GetMapping("/stock/{stockStringId}")
-	public String getStockDetails(@PathVariable int stockStringId, Model model)throws Exception {
+	/*@GetMapping("/stock/{stockStringId}")
+	public String getStockDetails(@Request, Model model)throws Exception {
 		StockString stockString = userServ.;
 		List<StockData> stockList = new ArrayList<>();
 		stockList.add(stockData);
 		model.addAttribute("stockList",stockList);
 		return "stock";
-	}
+	}*/
 	
 	
 	@GetMapping(path="/portfolio/{portfolioId}")
@@ -85,7 +85,7 @@ public class UsersController {
 	}
 	
 	
-	@PutMapping(path="/portfolio/{portfolioId}/")
+	@PostMapping(path="/portfolio/{portfolioId}/")
 	public ResponseEntity<Void> removeStockFromPortfolio(@RequestBody Portfolio existingPort,@RequestBody StockString stock,@PathVariable int portfolioId) throws Exception {
 		
 		if(stock != null && existingPort != null) {
@@ -97,7 +97,7 @@ public class UsersController {
 	}
 	
 	@PostMapping(path="/stock/{stockStringId}")
-	public ResponseEntity<Void> addStockToPortfolio(@RequestBody Portfolio existingPort,@RequestBody StockString stock, @PathVariable int portforlioId) throws Exception {
+	public ResponseEntity<Void> addStockToPortfolio(@RequestBody Portfolio existingPort,@RequestBody StockString stock, @PathVariable int StockStringId) throws Exception {
 		
 		if(stock != null && existingPort != null) {
 			userServ.addStockToPortfolio(existingPort, stock);

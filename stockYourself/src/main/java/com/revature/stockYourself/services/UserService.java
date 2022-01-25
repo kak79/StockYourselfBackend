@@ -18,8 +18,8 @@ public interface UserService {
 	public User register(User newUser) throws UsernameAlreadyExistsException;
 	public User logIn(String username, String password) throws IncorrectCredentialsException;
 	public User getUserById(int id);
-	public Stock getStock(String stockname) throws IOException;
-	public StockData getStockInfo(StockString stockName)throws Exception;
+//	public Stock getStock(String stockname) throws IOException;
+//	public StockData getStockInfo(StockString stockName)throws Exception;
 	public List<StockString> getPortfolio(Portfolio port) ;
 	public Portfolio addStockToPortfolio(Portfolio ExistingPort,StockString stockString);
 	public Portfolio removeStockFromPortfolio(Portfolio ExistingPort,StockString remStockString);
