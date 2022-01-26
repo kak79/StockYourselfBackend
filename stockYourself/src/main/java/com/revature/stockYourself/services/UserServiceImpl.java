@@ -4,211 +4,200 @@ import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.Interval;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.stockYourself.beans.Portfolio;
 import com.revature.stockYourself.beans.Post;
-import com.revature.stockYourself.beans.Stock;
+import com.revature.stockYourself.beans.StockString;
 import com.revature.stockYourself.beans.User;
 import com.revature.stockYourself.data.PortfolioRepository;
 import com.revature.stockYourself.data.PostRepository;
-import com.revature.stockYourself.data.StockRepository;
 import com.revature.stockYourself.data.UserRepository;
-import com.revature.stockYourself.exceptions.BadGetAllPortfolios;
+import com.revature.stockYourself.exceptions.CouldNotFindAllPostsException;
+import com.revature.stockYourself.exceptions.CreatorWasNullException;
 import com.revature.stockYourself.exceptions.IncorrectCredentialsException;
-import com.revature.stockYourself.exceptions.NoPortfolioByStock;
-import com.revature.stockYourself.exceptions.NoPortfolioByUserIdException;
-import com.revature.stockYourself.exceptions.NoPortfolioByUsernameException;
+import com.revature.stockYourself.exceptions.PortfolioEnteredWasNull;
+import com.revature.stockYourself.exceptions.PostDoesNotExistInDatabaseException;
+import com.revature.stockYourself.exceptions.PostEnteredWasNullException;
 import com.revature.stockYourself.exceptions.UsernameAlreadyExistsException;
-import com.revature.stockYourself.services.UserService;
 
-@Service 
+import yahoofinance.Stock;
+import yahoofinance.YahooFinance;
+import yahoofinance.histquotes.Interval;
+
 public class UserServiceImpl implements UserService {
-	private PortfolioRepository portfolioRepo;
+
 	private UserRepository userRepo;
 	private PostRepository postRepo;
-	private StockRepository stockRepo;
+	private PortfolioRepository portfolioRepo;
 	
 	@Autowired
-	public UserServiceImpl( PortfolioRepository portfolioRepo, UserRepository userRepo, PostRepository postRepo, StockRepository stockRepo) {
-		this.portfolioRepo = portfolioRepo;
+	public UserServiceImpl(UserRepository userRepo,
+				PostRepository postRepo,
+				PortfolioRepository portfolioRepo) {
 		this.userRepo = userRepo;
 		this.postRepo = postRepo;
-		this.stockRepo = stockRepo;
+		this.portfolioRepo = portfolioRepo;
 	}
-
+	
 	@Override
 	public User register(User newUser) throws UsernameAlreadyExistsException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			newUser = userRepo.save(newUser);
+			return newUser;
+		} catch (Exception e) {
+			if (e.getMessage()!=null && e.getMessage().contains("unique"))
+				throw new UsernameAlreadyExistsException();
+			else return null;
+		}
 	}
 
 	@Override
 	public User logIn(String username, String password) throws IncorrectCredentialsException {
-		// TODO Auto-generated method stub
-		return null;
+		User userFromDatabase = userRepo.findByUsername(username);
+		if (userFromDatabase != null && userFromDatabase.getPasswrd().equals(password)) {
+			return userFromDatabase;
+		} else {
+			throw new IncorrectCredentialsException();
+		}
+
 	}
 
 	@Override
 	public User getUserById(int id) {
-		// TODO Auto-generated method stub
+		Optional<User> usr = userRepo.findById(id);
+		if (usr.isPresent()) return usr.get();
+		else return null;
+	}
+
+	@Override
+	public Stock getStockByStockname(String stockname) throws Exception {
+		Stock stock = YahooFinance.get(stockname);
+		return stock;
+	}
+
+	@Override
+	public Map<String, Stock> getListOfStocks(List<StockString> listOfStocknames) throws Exception {
+		String[] stockString= new String [] {};
+		
+		listOfStocknames.forEach(stock ->{
+			stock.getStockString();
+			for(int i=0;i<=listOfStocknames.size();i++) {
+				stockString[i]= stock.getStockString();
+			}
+			});
+		Map<String, Stock> stocks = YahooFinance.get(stockString);
+		return stocks;
+	}
+
+	@Override
+	public Stock getStockHistoryWeekly(String stockname,int years) throws Exception {
+		Calendar from = Calendar.getInstance();
+		Calendar to = Calendar.getInstance();
+		from.add(Calendar.YEAR, -years);
+		Stock stock = YahooFinance.get(stockname, from, to, Interval.WEEKLY);
+		return stock;
+	}
+	
+	@Override
+	public Portfolio addStockToPortfolio(User user,StockString stock) {
+		Portfolio port = user.getPortfolio();
+		port.getPortfolioStingStocks().add(stock);
+		return port;
+	}
+	
+	@Override
+	public Portfolio removeStockToPortfolio(User user,StockString stock) {
+		Portfolio port = user.getPortfolio();
+		port.getPortfolioStingStocks().remove(stock);
+		return port;
+	}
+
+	
+
+	@Override
+	@Transactional
+	public Post createPost(Post newPost) {
+		 if (newPost != null) {
+			 postRepo.save(newPost);
+		 }
 		return null;
 	}
 
 	@Override
-	public Portfolio getPortfolioByUsername(String username) throws NoPortfolioByUsernameException {
-		User user = userRepo.findByUsername(username);
-		if(user != null) {
-			Portfolio usernamePortfolio = user.getPortfolio();
-			return usernamePortfolio;
-		} else {
-			throw new NoPortfolioByUsernameException();
-		}
-	
-	}
-
-
-	@Override
-	public Portfolio getPortfolioByUserId(int userId) throws NoPortfolioByUserIdException {
-		User user = userRepo.findByUserId(userId);
-		if(user != null) {
-			Portfolio usernamePortfolio = user.getPortfolio();
-			return usernamePortfolio;
-		} else {
-			throw new NoPortfolioByUserIdException();
-		}
-	
-	}
-
-	@Override
-	public List<Portfolio> getPortfolioByStock(String stockName) throws NoPortfolioByStock {
-		List<Portfolio> portfolioByStock = new ArrayList<Portfolio>();
-		List<Stock> allPortfolioStocks = null;
-		
-		//Stock stock = stockRepo.findByName(stockName);
-		List<Portfolio> allPortfolios = portfolioRepo.findAll();
-		for (Portfolio portfolio : allPortfolios) {
-			Stock stock = new Stock();
-//			allPortfolioStocks = portfolio.getPortfolioStocks();
-		 allPortfolioStocks = new ArrayList<Stock>();
-			allPortfolioStocks.add(portfolio.getStock1());
-			allPortfolioStocks.add(portfolio.getStock2());
-			allPortfolioStocks.add(portfolio.getStock3());
-			allPortfolioStocks.add(portfolio.getStock4());
-			allPortfolioStocks.add(portfolio.getStock5());
-//			
-//			if(allPortfolioStocks.iterator().toString() != null {
-//				portfolioByStock.add(portfolio);
-//			}
-//		}
-//			for(Stock stock : allPortfolioStocks) {
-//				if(stock.getName().equals(stockName)) {
-//					
-//				portfolioByStock.add(portfolio);
-//			
-//			} else {
-//				throw new NoPortfolioByStock();
-//			}
-//	
-		}
-
-		return portfolioByStock;
-		
-	}
-
-	@Override
-	public List<Portfolio> getAllPortfolios() throws BadGetAllPortfolios {
-		List<Portfolio> allPortfolios = portfolioRepo.findAll();
-		if(!(allPortfolios.isEmpty())) {
-			return allPortfolios;
-		} else {
-			throw new BadGetAllPortfolios();
-		}
-		
-	}
-
-	@Override
-	@Transactional(propagation=Propagation.REQUIRED)
-	public void updatePortfolio(User loggedInUser, Portfolio portfolioToUpdate) {
-		if (portfolioToUpdate != null && loggedInUser != null) {
-						if (portfolioToUpdate.getPortfolioId() == loggedInUser.getPortfolio().getPortfolioId()) {
-								portfolioRepo.save(portfolioToUpdate);
-						} else {
-							// throw new PortfolioIdUserIdConflict(); // create PortfolioIdUserIdConflict() exception
-						}
-		} else {
-			// throw new PortfolioToUpdateIsNull();  //create PortfolioToUpdateIsNull() exception
-		}
-	}
-	
-
-	@Override
 	@Transactional
-	public void buyStock(User loggedInUser, Stock stockToBuy) {
-		if (loggedInUser != null && stockToBuy != null) {
-			Portfolio loggedInUserPortfolio = loggedInUser.getPortfolio();
-			
-			if(loggedInUserPortfolio != null) {
-				List<Stock> loggedInUserPortfolioStocks = loggedInUserPortfolio.getPortfolioStocks();
-				loggedInUserPortfolioStocks.add(stockToBuy);
-				loggedInUserPortfolio.setPortfolioStocksToStocks(loggedInUserPortfolioStocks);
+	public Post updatePost(Post existingPost) throws PostDoesNotExistInDatabaseException, PostEnteredWasNullException {
+		if(existingPost != null) {
+			Post post = postRepo.findByPostId(existingPost.getPostId());
+			if(post != null) {
+				postRepo.save(existingPost);
+				Post postOutput = postRepo.getById(existingPost.getPostId());
+				return postOutput;
 				
 			} else {
-				//throw new NoPortfolioByUserException();  //create NoPortfolioByUser(); exception
+				throw new PostDoesNotExistInDatabaseException();
 			}
-		} else {
-			//throw new DataNotFoundException();  // create DataNotFoundException
+		} else { 
+			throw new PostEnteredWasNullException();
 		}
-		
 	}
 
 	@Override
-	@Transactional
-	public void sellStock(User loggedInUser, Stock stockToSell) {
-		if (loggedInUser != null && stockToSell != null) {
-			Portfolio loggedInUserPortfolio = loggedInUser.getPortfolio();
-			
-			if(loggedInUserPortfolio != null) {
-				List<Stock> loggedInUserPortfolioStocks = loggedInUserPortfolio.getPortfolioStocks();
-				for (Stock stock : loggedInUserPortfolioStocks) {
-					if(stock.getName().equals(stockToSell.getName())) {
-						loggedInUserPortfolioStocks.remove(stock);
-					}
+	public List<Post> getAllPosts() throws CouldNotFindAllPostsException {
+		List<Post> listOfAllPosts = postRepo.findAll();
+		if (!(listOfAllPosts.isEmpty())) {
+			return listOfAllPosts;
+		} else {
+			throw new CouldNotFindAllPostsException();
+		}
+	}
+
+	@Override
+	public List<Post> getAllPostsByCreator(User creator) throws CreatorWasNullException {
+		List<Post> allPostByCreator = new ArrayList<Post>();
+		if (creator != null) {
+			List<Post> allPost = postRepo.findAll();
+			for ( Post post : allPost) {
+				if (post.getCreator().getUserId() == creator.getUserId()) {
+					allPostByCreator.add(post);
 				}
-				loggedInUserPortfolio.setPortfolioStocksToStocks(loggedInUserPortfolioStocks);
-				
-			} else {
-				//throw new NoPortfolioByUserException();  //create NoPortfolioByUser(); exception
 			}
 		} else {
-			//throw new DataNotFoundException();  // create DataNotFoundException
+			throw new CreatorWasNullException();
 		}
+			return allPostByCreator;
 		
 	}
 
 	@Override
-	public List<Stock> getAllStocks() {
-		List<Stock> allStocks = stockRepo.findAll();
-		if(!(allStocks.isEmpty())) {
-			return allStocks;
+	public List<Post> getAllPostsByPortfolio(Portfolio portfolioPostedOn) throws PortfolioEnteredWasNull {
+		List<Post> allPostByPortfolio = new ArrayList<Post>();
+		if (portfolioPostedOn != null) {
+			List<Post> allPost = postRepo.findAll();
+			for ( Post post : allPost) {
+				if (post.getPortfolioPostedOn().getPortfolioId() == portfolioPostedOn.getPortfolioId()) {
+					allPostByPortfolio.add(post);
+				}
+			}
 		} else {
-			//throw new AllStocksAreEmptyException(); // create AllStocksAreEmptyException
+			throw new PortfolioEnteredWasNull();
 		}
+			return allPostByPortfolio;
+		
+	}
+
+	@Override
+	public Map<String, Stock> getListOfStocks(String[] listOfStocknames) throws Exception {
+		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public void deletePost(User loggedInUser, Post postToDelete) {
-		// TODO Auto-generated method stub
-		
-	}
+<<<<<<< HEAD
 
 	@Override
 	public void buyStock(User loggedInUser, com.revature.stockYourself.beans.Stock stockToBuy) {
@@ -222,3 +211,8 @@ public class UserServiceImpl implements UserService {
 		
 	}
 }
+=======
+		
+
+}
+>>>>>>> 619ff788b8ff55624d19b9c66070ed89fcf47782

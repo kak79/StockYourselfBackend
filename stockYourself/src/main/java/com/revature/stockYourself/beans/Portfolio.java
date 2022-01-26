@@ -3,20 +3,32 @@ package com.revature.stockYourself.beans;
 import java.util.ArrayList;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.Objects;import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="portfolio")
 public class Portfolio {
-
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int portfolioId;
-	private Stock stock1;
-	private Stock stock2;
-	private Stock stock3;
-	private Stock stock4;
-	private Stock stock5;
-	private List<Stock> portfolioStocks;
+	private String portfolioName;
+	// private double points;
+	@ManyToMany
+	@JoinTable(name="portfolio_stock",
+			joinColumns = @JoinColumn(name="portfolo_id"),
+			inverseJoinColumns = @JoinColumn(name="stock_string"))
+	private List<StockString> portfolioStingStocks;
 	
 	public Portfolio() {
 		portfolioId = 0;
+<<<<<<< HEAD
 		
 	}
 	
@@ -52,70 +64,52 @@ public class Portfolio {
 
 	public void setStock4(Stock stock4) {
 		this.stock4 = stock4;
-	}
-
-	public Stock getStock5() {
-		return stock5;
-	}
-
-	public void setStock5(Stock stock5) {
-		this.stock5 = stock5;
-	}
-
+=======
+		portfolioName = " ";
+		portfolioStingStocks = new ArrayList<>();
+	}	
+	
 	public int getPortfolioId() {
 		return portfolioId;
-	}
-
+	}	
+	
 	public void setPortfolioId(int portfolioId) {
 		this.portfolioId = portfolioId;
+>>>>>>> 619ff788b8ff55624d19b9c66070ed89fcf47782
 	}
 	
-	public List<Stock> getPortfolioStocks() {
-		 portfolioStocks = new ArrayList<Stock>();
-		if(stock1 != null) {
-			portfolioStocks.add(stock1);
-		}
-		if(stock2 != null) {
-			portfolioStocks.add(stock2);
-		}
-		if(stock3 != null) {
-			portfolioStocks.add(stock3);
-		}
-		if(stock4 != null) {
-			portfolioStocks.add(stock4);
-		}
-		if(stock5 != null) {
-			portfolioStocks.add(stock5);
-		}
-		return portfolioStocks;
-		
-	}
 	
-	public void setPortfolioStocksToStocks(List<Stock> stocksToUpdate) {
-		if (!(stocksToUpdate.isEmpty())) {
-			if(stocksToUpdate.get(0) != null) {
-				stock1 = stocksToUpdate.get(0);
-				}
-			if(stocksToUpdate.get(1) != null) {
-				stock2 = stocksToUpdate.get(1);
-			}
-			if(stocksToUpdate.get(2) != null) {
-				stock3 = stocksToUpdate.get(2);
-			}
-			if(stocksToUpdate.get(3) != null) {
-				stock4 = stocksToUpdate.get(3);
-			}
-			if(stocksToUpdate.get(4) != null) {
-				stock5 = stocksToUpdate.get(4);
-			}
-		} else {
-			// throw new StockListWasEmptyException(); //create StockListWasEmpty() exception
-		}
+	
+	public String getPortfolioName() {
+		return portfolioName;
+	}
+
+	public void setPortfolioName(String portfolioName) {
+		this.portfolioName = portfolioName;
+	}
+
+<<<<<<< HEAD
+	public int getPortfolioId() {
+		return portfolioId;
+=======
+	public List<StockString> getPortfolioStingStocks() {
+		return portfolioStingStocks;
+	}
+
+	public void setPortfolioStingStocks(List<StockString> portfolioStingStocks) {
+		this.portfolioStingStocks = portfolioStingStocks;
+>>>>>>> 619ff788b8ff55624d19b9c66070ed89fcf47782
+	}
+
+	@Override
+	public String toString() {
+		return "Portfolio [portfolioId=" + portfolioId + ", portfolioName=" + portfolioName + ", portfolioStingStocks="
+				+ portfolioStingStocks + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(portfolioId, stock1, stock2, stock3, stock4, stock5);
+		return Objects.hash(portfolioId, portfolioName, portfolioStingStocks);
 	}
 
 	@Override
@@ -127,19 +121,12 @@ public class Portfolio {
 		if (getClass() != obj.getClass())
 			return false;
 		Portfolio other = (Portfolio) obj;
-		return portfolioId == other.portfolioId && Objects.equals(stock1, other.stock1)
-				&& Objects.equals(stock2, other.stock2) && Objects.equals(stock3, other.stock3)
-				&& Objects.equals(stock4, other.stock4) && Objects.equals(stock5, other.stock5);
+		return portfolioId == other.portfolioId && Objects.equals(portfolioName, other.portfolioName)
+				&& Objects.equals(portfolioStingStocks, other.portfolioStingStocks);
 	}
-
-	@Override
-	public String toString() {
-		return "Portfolio [portfolioId=" + portfolioId + ", stock1=" + stock1 + ", stock2=" + stock2 + ", stock3="
-				+ stock3 + ", stock4=" + stock4 + ", stock5=" + stock5 + "]";
-	}
-
 	
 	
+
 	
 	
 }
