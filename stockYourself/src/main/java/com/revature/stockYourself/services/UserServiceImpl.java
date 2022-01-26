@@ -32,18 +32,29 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User register(User newUser) throws UsernameAlreadyExistsException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			newUser = userRepo.save(newUser);
+			return newUser;
+		} catch (Exception e) {
+			if (e.getMessage()!=null && e.getMessage().contains("unique"))
+				throw new UsernameAlreadyExistsException();
+			else return null;
+		}
+
 	}
 
 	@Override
 	public User logIn(String username, String password) throws IncorrectCredentialsException {
-		// TODO Auto-generated method stub
-		return null;
+		User userFromDatabase = userRepo.findByUsername(username);
+		if (userFromDatabase != null && userFromDatabase.getPasswrd().equals(password)) {
+			return userFromDatabase;
+		} else {
+			throw new IncorrectCredentialsException();
+		}
+
 	}
 
 	@Override
-<<<<<<< HEAD
 	@Transactional
 	public Post updatePost(Post existingPost) throws PostDoesNotExistInDatabaseException, PostEnteredWasNullException {
 		if(existingPost != null) {
@@ -117,10 +128,11 @@ public class UserServiceImpl implements UserService {
 		}
 			return allPostByPortfolio;
 		
-=======
 	public User getUserById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<User> user = userRepo.findById(id);
+		if (user.isPresent()) return user.get();
+		else return null;
+
 	}
 
 	@Override
@@ -142,7 +154,6 @@ public class UserServiceImpl implements UserService {
 		from.add(Calendar.YEAR, -years);
 		Stock stock = YahooFinance.get(stockname, from, to, Interval.WEEKLY);
 		return stock;
->>>>>>> 6fb72ffccb81b8ccf41dbea5629265934019aeff
 	}
 	
 	
