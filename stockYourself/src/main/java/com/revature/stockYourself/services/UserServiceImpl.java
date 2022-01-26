@@ -1,20 +1,21 @@
 package com.revature.stockYourself.services;
 
 import java.util.Map;
+import java.util.Optional;
 
+import org.springframework.transaction.annotation.Transactional;
 
-
-
+import com.revature.stockYourself.beans.Portfolio;
+import com.revature.stockYourself.beans.Post;
+import com.revature.stockYourself.beans.StockString;
 import com.revature.stockYourself.beans.User;
-<<<<<<< HEAD
 import com.revature.stockYourself.data.PortfolioRepository;
 import com.revature.stockYourself.data.PostRepository;
 import com.revature.stockYourself.data.StockStringRepository;
 import com.revature.stockYourself.data.UserRepository;
 import com.revature.stockYourself.exceptions.CouldNotFindAllPostsException;
 import com.revature.stockYourself.exceptions.CreatorWasNullException;
-=======
->>>>>>> 6fb72ffccb81b8ccf41dbea5629265934019aeff
+
 import com.revature.stockYourself.exceptions.IncorrectCredentialsException;
 import com.revature.stockYourself.exceptions.PostAndOrUserWasNull;
 import com.revature.stockYourself.exceptions.PostDoesNotExistInDatabaseException;
@@ -26,9 +27,16 @@ import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.Interval;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class UserServiceImpl implements UserService {
+	private UserRepository userRepo;
+	private PostRepository postRepo;
+	private StockStringRepository stockStringRepo;
+	private PortfolioRepository portRepo;
+
 
 	@Override
 	public User register(User newUser) throws UsernameAlreadyExistsException {
@@ -127,6 +135,7 @@ public class UserServiceImpl implements UserService {
 			throw new CreatorWasNullException();
 		}
 			return allPostByPortfolio;
+	}
 		
 	public User getUserById(int id) {
 		Optional<User> user = userRepo.findById(id);
@@ -154,6 +163,30 @@ public class UserServiceImpl implements UserService {
 		from.add(Calendar.YEAR, -years);
 		Stock stock = YahooFinance.get(stockname, from, to, Interval.WEEKLY);
 		return stock;
+	}
+
+	@Override
+	public List<StockString> getPortfolio(Portfolio port) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Portfolio addStockToPortfolio(Portfolio ExistingPort, StockString stockString) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Portfolio removeStockFromPortfolio(Portfolio ExistingPort, StockString remStockString) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Post createPost(Post newPost) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

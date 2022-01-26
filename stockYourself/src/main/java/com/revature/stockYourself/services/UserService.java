@@ -1,8 +1,12 @@
 package com.revature.stockYourself.services;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.revature.stockYourself.beans.Portfolio;
+import com.revature.stockYourself.beans.Post;
+import com.revature.stockYourself.beans.StockString;
 import com.revature.stockYourself.beans.User;
 import com.revature.stockYourself.exceptions.CouldNotFindAllPostsException;
 import com.revature.stockYourself.exceptions.CreatorWasNullException;
@@ -30,8 +34,7 @@ public interface UserService {
 	public List<Post> getAllPosts() throws CouldNotFindAllPostsException;
 	public List<Post> getAllPostsByCreator(User creator) throws CreatorWasNullException;
 	public List<Post> getAllPostsByPortfolio(Portfolio portfolioPostedOn) throws CreatorWasNullException;
-	void deletePost(Post postToDelete, User loggedInUser) throws UserIsNotThePostCreatorException, PostAndOrUserWasNull;
-}
+	public void deletePost(Post postToDelete, User loggedInUser) throws UserIsNotThePostCreatorException, PostAndOrUserWasNull;
 	public yahoofinance.Stock getStockByStockname(String stockname) throws Exception;
 	public Map<String, Stock> getListOfStocks(String[] listOfStocknames)throws Exception;
 	public Stock getStockHistoryWeekly(String stockname,int years) throws Exception;

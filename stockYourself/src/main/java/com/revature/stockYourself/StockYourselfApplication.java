@@ -1,6 +1,7 @@
 package com.revature.stockYourself;
 
 import java.io.IOException;
+
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Calendar;
@@ -16,8 +17,6 @@ import com.revature.stockYourself.services.UserServiceImpl;
 import ch.qos.logback.core.net.SyslogOutputStream;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
-
-import com.revature.stockYourself.beans.Stock;
 
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.Interval;
