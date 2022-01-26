@@ -10,8 +10,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+
 @Entity
-@Table(name="stock_string")
 public class StockString {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

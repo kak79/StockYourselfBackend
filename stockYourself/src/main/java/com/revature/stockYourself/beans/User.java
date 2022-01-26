@@ -28,10 +28,10 @@ public class User {
 	private String email;
 	private String phoneNumber;
 	@ManyToOne
-	@JoinColumn(name="user_role")
+	@JoinColumn(name="role_id")
 	private Role role;
 	@OneToOne
-	@JoinTable(name="portfolio_id")
+	@JoinColumn(name="portfolio_id")
 	private Portfolio portfolio;
 	
 	public User() {

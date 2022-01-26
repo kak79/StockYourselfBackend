@@ -1,26 +1,28 @@
 package com.revature.stockYourself.services;
 
+<<<<<<< HEAD
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.Interval;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+=======
+>>>>>>> 6fb72ffccb81b8ccf41dbea5629265934019aeff
 import java.util.Map;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.revature.stockYourself.beans.Portfolio;
-import com.revature.stockYourself.beans.Post;
-import com.revature.stockYourself.beans.StockString;
+
+
 import com.revature.stockYourself.beans.User;
+<<<<<<< HEAD
 import com.revature.stockYourself.data.PortfolioRepository;
 import com.revature.stockYourself.data.PostRepository;
 import com.revature.stockYourself.data.UserRepository;
 import com.revature.stockYourself.exceptions.CouldNotFindAllPostsException;
 import com.revature.stockYourself.exceptions.CreatorWasNullException;
+=======
+>>>>>>> 6fb72ffccb81b8ccf41dbea5629265934019aeff
 import com.revature.stockYourself.exceptions.IncorrectCredentialsException;
 import com.revature.stockYourself.exceptions.PortfolioEnteredWasNull;
 import com.revature.stockYourself.exceptions.PostDoesNotExistInDatabaseException;
@@ -31,49 +33,26 @@ import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.Interval;
 
+import java.util.Calendar;
+
 public class UserServiceImpl implements UserService {
 
-	private UserRepository userRepo;
-	private PostRepository postRepo;
-	private PortfolioRepository portfolioRepo;
-	
-	@Autowired
-	public UserServiceImpl(UserRepository userRepo,
-				PostRepository postRepo,
-				PortfolioRepository portfolioRepo) {
-		this.userRepo = userRepo;
-		this.postRepo = postRepo;
-		this.portfolioRepo = portfolioRepo;
-	}
-	
 	@Override
 	public User register(User newUser) throws UsernameAlreadyExistsException {
-		try {
-			newUser = userRepo.save(newUser);
-			return newUser;
-		} catch (Exception e) {
-			if (e.getMessage()!=null && e.getMessage().contains("unique"))
-				throw new UsernameAlreadyExistsException();
-			else return null;
-		}
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public User logIn(String username, String password) throws IncorrectCredentialsException {
-		User userFromDatabase = userRepo.findByUsername(username);
-		if (userFromDatabase != null && userFromDatabase.getPasswrd().equals(password)) {
-			return userFromDatabase;
-		} else {
-			throw new IncorrectCredentialsException();
-		}
-
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public User getUserById(int id) {
-		Optional<User> usr = userRepo.findById(id);
-		if (usr.isPresent()) return usr.get();
-		else return null;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -83,16 +62,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Map<String, Stock> getListOfStocks(List<StockString> listOfStocknames) throws Exception {
-		String[] stockString= new String [] {};
-		
-		listOfStocknames.forEach(stock ->{
-			stock.getStockString();
-			for(int i=0;i<=listOfStocknames.size();i++) {
-				stockString[i]= stock.getStockString();
-			}
-			});
-		Map<String, Stock> stocks = YahooFinance.get(stockString);
+	public Map<String, Stock> getListOfStocks(String[] listOfStocknames) throws Exception {
+		Map<String, Stock> stocks = YahooFinance.get(listOfStocknames);
 		return stocks;
 	}
 
@@ -105,22 +76,9 @@ public class UserServiceImpl implements UserService {
 		return stock;
 	}
 	
-	@Override
-	public Portfolio addStockToPortfolio(User user,StockString stock) {
-		Portfolio port = user.getPortfolio();
-		port.getPortfolioStingStocks().add(stock);
-		return port;
-	}
-	
-	@Override
-	public Portfolio removeStockToPortfolio(User user,StockString stock) {
-		Portfolio port = user.getPortfolio();
-		port.getPortfolioStingStocks().remove(stock);
-		return port;
-	}
-
 	
 
+<<<<<<< HEAD
 	@Override
 	@Transactional
 	public Post createPost(Post newPost) {
@@ -216,3 +174,6 @@ public class UserServiceImpl implements UserService {
 
 }
 >>>>>>> 619ff788b8ff55624d19b9c66070ed89fcf47782
+=======
+}
+>>>>>>> 6fb72ffccb81b8ccf41dbea5629265934019aeff
