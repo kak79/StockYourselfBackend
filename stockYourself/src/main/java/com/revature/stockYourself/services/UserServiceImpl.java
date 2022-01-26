@@ -1,5 +1,8 @@
 package com.revature.stockYourself.services;
 
+import yahoofinance.Stock;
+import yahoofinance.YahooFinance;
+import yahoofinance.histquotes.Interval;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -203,6 +206,18 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void deletePost(User loggedInUser, Post postToDelete) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void buyStock(User loggedInUser, com.revature.stockYourself.beans.Stock stockToBuy) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void sellStock(User loggedInUser, com.revature.stockYourself.beans.Stock stockToSell) {
 		// TODO Auto-generated method stub
 		
 	}

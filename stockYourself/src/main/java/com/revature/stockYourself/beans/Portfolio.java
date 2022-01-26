@@ -1,6 +1,7 @@
 package com.revature.stockYourself.beans;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -14,12 +15,18 @@ public class Portfolio {
 	private Stock stock5;
 	private List<Stock> portfolioStocks;
 	
+	public Portfolio() {
+		portfolioId = 0;
+		
+	}
+	
 	
 	public Stock getStock1() {
 		return stock1;
 	}
 
 	public void setStock1(Stock stock1) {
+	//	stock1 = yahoofinance.get(stock1.getName());
 		this.stock1 = stock1;
 	}
 
@@ -53,10 +60,6 @@ public class Portfolio {
 
 	public void setStock5(Stock stock5) {
 		this.stock5 = stock5;
-	}
-
-	public Portfolio() {
-		portfolioId = 0;
 	}
 
 	public int getPortfolioId() {
