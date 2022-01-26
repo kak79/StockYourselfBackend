@@ -47,5 +47,5 @@ public class StockYourselfApplication {
 		yahoofinance.Stock tesla = YahooFinance.get("TSLA", true);
 		System.out.println(tesla.getHistory());*/
 	}
-
+}
 

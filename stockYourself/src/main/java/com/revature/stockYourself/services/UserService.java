@@ -1,8 +1,11 @@
 package com.revature.stockYourself.services;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.revature.stockYourself.beans.Post;
+import com.revature.stockYourself.beans.StockString;
 import com.revature.stockYourself.beans.User;
 import com.revature.stockYourself.exceptions.CouldNotFindAllPostsException;
 import com.revature.stockYourself.exceptions.CreatorWasNullException;
@@ -20,7 +23,7 @@ public interface UserService {
 	public User register(User newUser) throws UsernameAlreadyExistsException;
 	public User logIn(String username, String password) throws IncorrectCredentialsException;
 	public User getUserById(int id);
-<<<<<<< HEAD
+
 //	public Stock getStock(String stockname) throws IOException;
 //	public StockData getStockInfo(StockString stockName)throws Exception;
 	public List<StockString> getPortfolio(Portfolio port) ;
@@ -32,10 +35,8 @@ public interface UserService {
 	public List<Post> getAllPostsByCreator(User creator) throws CreatorWasNullException;
 	public List<Post> getAllPostsByPortfolio(Portfolio portfolioPostedOn) throws CreatorWasNullException;
 	void deletePost(Post postToDelete, User loggedInUser) throws UserIsNotThePostCreatorException, PostAndOrUserWasNull;
-}
-=======
+
 	public yahoofinance.Stock getStockByStockname(String stockname) throws Exception;
 	public Map<String, Stock> getListOfStocks(String[] listOfStocknames)throws Exception;
 	public Stock getStockHistoryWeekly(String stockname,int years) throws Exception;
 }
->>>>>>> 6fb72ffccb81b8ccf41dbea5629265934019aeff
