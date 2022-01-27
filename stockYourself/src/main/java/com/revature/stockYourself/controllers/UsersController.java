@@ -131,7 +131,6 @@ public class UsersController {
 //	}
 
 	
-<<<<<<< HEAD
 	
 	@GetMapping(path="/portfolio/{portfolioId}")
 	public ResponseEntity<List<StockString>> getPortfolioById(@RequestBody Portfolio existingPort,@PathVariable int portfolioId) throws Exception {
@@ -164,7 +163,6 @@ public class UsersController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
-=======
 //	@PostMapping(path="/stock/{stockStringId}")
 //	public ResponseEntity<Void> addStockToPortfolio(@RequestBody Portfolio existingPort,@RequestBody StockString stock, @PathVariable int portforlioId) throws Exception {
 //		
@@ -175,6 +173,5 @@ public class UsersController {
 //			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 //		}
 //	}
->>>>>>> e39365369a2b9de41c49d5a2953ac368e311711c
 	
 }
