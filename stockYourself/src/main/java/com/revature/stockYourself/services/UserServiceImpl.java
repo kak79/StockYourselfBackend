@@ -1,8 +1,12 @@
 package com.revature.stockYourself.services;
 
-import java.util.Map;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.stockYourself.beans.Portfolio;
@@ -15,7 +19,6 @@ import com.revature.stockYourself.data.StockStringRepository;
 import com.revature.stockYourself.data.UserRepository;
 import com.revature.stockYourself.exceptions.CouldNotFindAllPostsException;
 import com.revature.stockYourself.exceptions.CreatorWasNullException;
-
 import com.revature.stockYourself.exceptions.IncorrectCredentialsException;
 import com.revature.stockYourself.exceptions.PostAndOrUserWasNull;
 import com.revature.stockYourself.exceptions.PostDoesNotExistInDatabaseException;
@@ -23,21 +26,26 @@ import com.revature.stockYourself.exceptions.PostEnteredWasNullException;
 import com.revature.stockYourself.exceptions.UserIsNotThePostCreatorException;
 import com.revature.stockYourself.exceptions.UsernameAlreadyExistsException;
 
-import yahoofinance.Stock;
-import yahoofinance.YahooFinance;
-import yahoofinance.histquotes.Interval;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
+@Service
 public class UserServiceImpl implements UserService {
+
 	private UserRepository userRepo;
 	private PostRepository postRepo;
 	private StockStringRepository stockStringRepo;
 	private PortfolioRepository portRepo;
 
-
+	
+	@Autowired
+	public UserServiceImpl(UserRepository userRepo,
+				PostRepository postRepo,
+				PortfolioRepository portfolioRepo) {
+		this.userRepo = userRepo;
+		this.postRepo = postRepo;
+		this.portRepo = portfolioRepo;
+		
+	}
+	
 	@Override
 	public User register(User newUser) throws UsernameAlreadyExistsException {
 		try {
@@ -61,6 +69,28 @@ public class UserServiceImpl implements UserService {
 		}
 
 	}
+	
+	public User getUserById(int id) {
+		Optional<User> user = userRepo.findById(id);
+		if (user.isPresent()) return user.get();
+		else return null;
+
+	}
+	
+	
+
+	@Override
+	@Transactional
+	public Post createPost(Post newPost) {
+		 if (newPost != null) {
+			 postRepo.save(newPost);
+		 }
+		return null;
+	}
+
+	
+	
+	
 
 	@Override
 	@Transactional
@@ -80,19 +110,7 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
-	@Override
-	@Transactional
-	public void deletePost(Post postToDelete, User loggedInUser) throws UserIsNotThePostCreatorException, PostAndOrUserWasNull {
-		if(postToDelete != null && loggedInUser != null) {
-			if(postToDelete.getCreator().getUserId() == loggedInUser.getUserId()) {
-				postRepo.delete(postToDelete);
-			} else {
-				throw new UserIsNotThePostCreatorException();
-			}
-		} else {
-			throw new PostAndOrUserWasNull();
-		}
-	}
+
 
 	@Override
 	public List<Post> getAllPosts() throws CouldNotFindAllPostsException {
@@ -137,57 +155,43 @@ public class UserServiceImpl implements UserService {
 			return allPostByPortfolio;
 	}
 		
-	public User getUserById(int id) {
-		Optional<User> user = userRepo.findById(id);
-		if (user.isPresent()) return user.get();
-		else return null;
 
-	}
 
+	
 	@Override
-	public Stock getStockByStockname(String stockname) throws Exception {
-		Stock stock = YahooFinance.get(stockname);
-		return stock;
+	@Transactional
+	public void deletePost(Post postToDelete, User loggedInUser) throws UserIsNotThePostCreatorException, PostAndOrUserWasNull {
+		if(postToDelete != null && loggedInUser != null) {
+			if(postToDelete.getCreator().getUserId() == loggedInUser.getUserId()) {
+				postRepo.delete(postToDelete);
+			} else {
+				throw new UserIsNotThePostCreatorException();
+			}
+		} else {
+			throw new PostAndOrUserWasNull();
+		}
 	}
 
-	@Override
-	public Map<String, Stock> getListOfStocks(String[] listOfStocknames) throws Exception {
-		Map<String, Stock> stocks = YahooFinance.get(listOfStocknames);
-		return stocks;
-	}
-
-	@Override
-	public Stock getStockHistoryWeekly(String stockname,int years) throws Exception {
-		Calendar from = Calendar.getInstance();
-		Calendar to = Calendar.getInstance();
-		from.add(Calendar.YEAR, -years);
-		Stock stock = YahooFinance.get(stockname, from, to, Interval.WEEKLY);
-		return stock;
-	}
-
+	
 	@Override
 	public List<StockString> getPortfolio(Portfolio port) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public Portfolio addStockToPortfolio(Portfolio ExistingPort, StockString stockString) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Portfolio removeStockFromPortfolio(Portfolio ExistingPort, StockString remStockString) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Post createPost(Post newPost) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+//	@Override
+//	public Portfolio addStockToPortfolio(User user,StockString stock) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public Portfolio removeStockToPortfolio(User user,StockString stock) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+	
 	
 	
 
