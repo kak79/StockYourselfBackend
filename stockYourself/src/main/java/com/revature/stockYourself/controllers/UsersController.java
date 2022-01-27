@@ -3,7 +3,6 @@ package com.revature.stockYourself.controllers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,17 +15,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.revature.stockYourself.beans.Portfolio;
 import com.revature.stockYourself.beans.StockData;
 import com.revature.stockYourself.beans.StockString;
 import com.revature.stockYourself.beans.User;
 import com.revature.stockYourself.exceptions.IncorrectCredentialsException;
 import com.revature.stockYourself.services.UserService;
-import com.revature.stockYourself.services.UserServiceImpl;
-
-import yahoofinance.Stock;
 
 @RestController
 @RequestMapping(path="/users")
@@ -95,10 +91,17 @@ public class UsersController {
 =======
 	@GetMapping("/stock/{stockStringId}")
 	public String getStockDetails(@PathVariable int stockStringId, Model model)throws Exception {
+<<<<<<< HEAD
 //		StockString stockString = userServ.;
 		List<StockData> stockList = new ArrayList<>();
 //		stockList.add(stockData);
 		model.addAttribute("stockList",stockList);
+=======
+//		StockString stockString = userServ;
+//		List<StockData> stockList = new ArrayList<>();
+//		stockList.add(stockData);
+//		model.addAttribute("stockList",stockList);
+>>>>>>> f331e7c1e88b38598166930f13edcd170d229e78
 		return "stock";
 	}
 
@@ -114,6 +117,7 @@ public class UsersController {
 	}
 	
 	
+<<<<<<< HEAD
 	@PutMapping(path="/portfolio/{portfolioId}/")
 	public ResponseEntity<Void> removeStockFromPortfolio(@RequestBody Portfolio existingPort,@RequestBody StockString stock,@PathVariable int portfolioId) throws Exception {
 		
@@ -125,16 +129,28 @@ public class UsersController {
 		}
 	}
 >>>>>>> fe6365e99fbb451a8fe44e9fb3e29719342c4890
+=======
+//	@PutMapping(path="/portfolio/{portfolioId}/")
+//	public ResponseEntity<Void> removeStockFromPortfolio(@RequestBody Portfolio existingPort,@RequestBody StockString stock,@PathVariable int portfolioId) throws Exception {
+//		
+//		if(stock != null && existingPort != null) {
+//			userServ.removeStockFromPortfolio(existingPort, stock);
+//			return ResponseEntity.status(HttpStatus.CREATED).build();
+//		}else {
+//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//		}
+//	}
+>>>>>>> f331e7c1e88b38598166930f13edcd170d229e78
 	
-	@PostMapping(path="/stock/{stockStringId}")
-	public ResponseEntity<Void> addStockToPortfolio(@RequestBody Portfolio existingPort,@RequestBody StockString stock, @PathVariable int portforlioId) throws Exception {
-		
-		if(stock != null && existingPort != null) {
-			userServ.addStockToPortfolio(existingPort, stock);
-			return ResponseEntity.status(HttpStatus.CREATED).build();
-		}else {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-		}
-	}
+//	@PostMapping(path="/stock/{stockStringId}")
+//	public ResponseEntity<Void> addStockToPortfolio(@RequestBody Portfolio existingPort,@RequestBody StockString stock, @PathVariable int portforlioId) throws Exception {
+//		
+//		if(stock != null && existingPort != null) {
+//			userServ.addStockToPortfolio(existingPort, stock);
+//			return ResponseEntity.status(HttpStatus.CREATED).build();
+//		}else {
+//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//		}
+//	}
 	
 }

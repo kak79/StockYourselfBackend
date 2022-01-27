@@ -49,7 +49,13 @@ import com.revature.stockYourself.exceptions.UsernameAlreadyExistsException;
 
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
+<<<<<<< HEAD
 import yahoofinance.histquotes.Interval;
+=======
+
+@Service
+public class UserServiceImpl implements UserService {
+>>>>>>> f331e7c1e88b38598166930f13edcd170d229e78
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -59,9 +65,23 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepo;
 	private PostRepository postRepo;
 	private StockStringRepository stockStringRepo;
+<<<<<<< HEAD
 	private PortfolioRepository portRepo;
 
 
+=======
+	
+	@Autowired
+	public UserServiceImpl(UserRepository userRepo,
+				PostRepository postRepo,
+				PortfolioRepository portfolioRepo) {
+		this.userRepo = userRepo;
+		this.postRepo = postRepo;
+		this.portfolioRepo = portfolioRepo;
+		
+	}
+	
+>>>>>>> f331e7c1e88b38598166930f13edcd170d229e78
 	@Override
 	public User register(User newUser) throws UsernameAlreadyExistsException {
 		try {
@@ -194,6 +214,7 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+<<<<<<< HEAD
 
 	@Override
 	public Portfolio addStockToPortfolio(Portfolio ExistingPort, StockString stockString) {
@@ -206,6 +227,36 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+=======
+	
+//	@Override
+//	@Transactional
+//	public Portfolio addStockToPortfolio(Portfolio ExistingPort,StockString stockString) {
+//		if(stockString !=null && stockString != null) {
+//			Portfolio port = portfolioRepo.findByPortfolioId(ExistingPort.getPortfolioId());
+//			StockString stock = stockStringRepo.findByStockName(stockString);
+//			port.getPortfolioStringStocks().add(stock);
+//			portfolioRepo.save(port);
+//		}
+//		return null;
+//	}
+	
+//	@Override
+//	@Transactional
+//	public Portfolio removeStockFromPortfolio(Portfolio ExistingPort,StockString remStockString) {
+//		if(ExistingPort != null && remStockString !=null) {
+//			Portfolio port = portfolioRepo.findByPortfolioId(ExistingPort.getPortfolioId());
+//			StockString stockString = stockStringRepo.findByStockName(remStockString);
+//			port.getPortfolioStringStocks().forEach(stock -> {
+//				if(stockString.getStockString().equals(stock.getStockString())) {
+//					portfolioRepo.deleteById(stockString.getStockStringId());
+//				}
+//			});
+//			
+//		}
+//		return null;
+//	}
+>>>>>>> f331e7c1e88b38598166930f13edcd170d229e78
 
 	@Override
 	public Post createPost(Post newPost) {
@@ -288,6 +339,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public Map<String, Stock> getListOfStocks(String[] listOfStocknames) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
@@ -307,6 +359,18 @@ public class UserServiceImpl implements UserService {
 	}
 }
 =======
+=======
+	public Stock getStock(String stockname) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Stock> getListOfStocks(List<StockString> portfolioStringStocks) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+>>>>>>> f331e7c1e88b38598166930f13edcd170d229e78
 		
 
 }

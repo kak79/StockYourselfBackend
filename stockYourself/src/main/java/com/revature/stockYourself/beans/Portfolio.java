@@ -23,7 +23,16 @@ public class Portfolio {
 	private int portfolioId;
 	private List<yahoofinance.Stock> stocks;
 	private String portfolioName;
+<<<<<<< HEAD
 	private List<StockString> portfolioStingStocks;
+=======
+	// private double points;
+//	@ManyToMany
+//	@JoinTable(name="portfolio_stock",
+//			joinColumns = @JoinColumn(name="portfolo_id"),
+//			inverseJoinColumns = @JoinColumn(name="stock_string"))
+//	private List<StockString> portfolioStingStocks;
+>>>>>>> f331e7c1e88b38598166930f13edcd170d229e78
 	
 	public Portfolio() {
 		portfolioId = 0;
@@ -67,7 +76,7 @@ public class Portfolio {
 		this.stock4 = stock4;
 =======
 		portfolioName = " ";
-		portfolioStingStocks = new ArrayList<>();
+//		portfolioStingStocks = new ArrayList<>();
 	}	
 	
 =======
@@ -99,6 +108,7 @@ public class Portfolio {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	public int getPortfolioId() {
 		return portfolioId;
 =======
@@ -125,11 +135,29 @@ public class Portfolio {
 
 	public void setStocks(List<yahoofinance.Stock> stocks) {
 		this.stocks = stocks;
+=======
+//	public List<StockString> getPortfolioStringStocks() {
+//		return portfolioStingStocks;
+//	}
+//
+//	public void setPortfolioStringStocks(List<StockString> portfolioStringStocks) {
+//		this.portfolioStingStocks = portfolioStringStocks;
+//	}
+
+	@Override
+	public String toString() {
+		return "Portfolio [portfolioId=" + portfolioId + ", portfolioName=" + portfolioName + ", portfolioStingStocks="
+				 + "]";
+>>>>>>> f331e7c1e88b38598166930f13edcd170d229e78
 	}
 
 	@Override
 	public int hashCode() {
+<<<<<<< HEAD
 		return Objects.hash(portfolioId, stocks);
+=======
+		return Objects.hash(portfolioId, portfolioName);
+>>>>>>> f331e7c1e88b38598166930f13edcd170d229e78
 	}
 
 	@Override
@@ -141,7 +169,11 @@ public class Portfolio {
 		if (getClass() != obj.getClass())
 			return false;
 		Portfolio other = (Portfolio) obj;
+<<<<<<< HEAD
 		return portfolioId == other.portfolioId && Objects.equals(stocks, other.stocks);
+=======
+		return portfolioId == other.portfolioId && Objects.equals(portfolioName, other.portfolioName);
+>>>>>>> f331e7c1e88b38598166930f13edcd170d229e78
 	}
 
 	@Override

@@ -55,6 +55,7 @@
 			<version>3.15.0</version>
 		</dependency>
 <<<<<<< HEAD
+<<<<<<< HEAD
 		<dependency>
 		<groupId>org.mockito</groupId>
 		<artifactId>mockito-core</artifactId>
@@ -100,6 +101,13 @@
 
 
 >>>>>>> 619ff788b8ff55624d19b9c66070ed89fcf47782
+=======
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<scope>test</scope>
+		</dependency>
+>>>>>>> f331e7c1e88b38598166930f13edcd170d229e78
 	</dependencies>
 
 	<build>

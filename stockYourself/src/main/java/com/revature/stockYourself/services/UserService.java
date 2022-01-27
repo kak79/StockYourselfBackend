@@ -33,9 +33,10 @@ public interface UserService {
 //	public Stock getStock(String stockname) throws IOException;
 //	public StockData getStockInfo(StockString stockName)throws Exception;
 	public List<StockString> getPortfolio(Portfolio port) ;
-	public Portfolio addStockToPortfolio(Portfolio ExistingPort,StockString stockString);
-	public Portfolio removeStockFromPortfolio(Portfolio ExistingPort,StockString remStockString);
+//	public Portfolio addStockToPortfolio(Portfolio ExistingPort,StockString stockString);
+//	public Portfolio removeStockFromPortfolio(Portfolio ExistingPort,StockString remStockString);
 	public Post createPost(Post newPost);
+<<<<<<< HEAD
 	public Post updatePost(Post existingPost) throws PostDoesNotExistInDatabaseException, PostEnteredWasNullException;
 	public List<Post> getAllPosts() throws CouldNotFindAllPostsException;
 	public List<Post> getAllPostsByCreator(User creator) throws CreatorWasNullException;
@@ -57,3 +58,11 @@ public interface UserService {
 =======
 }
 >>>>>>> 6fb72ffccb81b8ccf41dbea5629265934019aeff
+=======
+	public Post updatePost(Post existingPost);
+	public List<Post> getAllPosts();
+	public List<Post> getAllPostsByCreator(User creator);
+	public List<Post> getAllPostsByPortfolio(Portfolio portfolioPostedOn);
+	public Map<String, Stock> getListOfStocks(List<StockString> portfolioStringStocks);
+}
+>>>>>>> f331e7c1e88b38598166930f13edcd170d229e78

@@ -1,22 +1,17 @@
 package com.revature.stockYourself;
 
+<<<<<<< HEAD
 import java.io.IOException;
 
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Calendar;
 
+=======
+>>>>>>> f331e7c1e88b38598166930f13edcd170d229e78
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
-import com.revature.stockYourself.beans.Portfolio;
-import com.revature.stockYourself.services.UserService;
-import com.revature.stockYourself.services.UserServiceImpl;
-
-import ch.qos.logback.core.net.SyslogOutputStream;
-import yahoofinance.Stock;
-import yahoofinance.YahooFinance;
 
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.Interval;
@@ -25,6 +20,7 @@ import yahoofinance.histquotes.Interval;
 public class StockYourselfApplication {
 
 	public static void main(String[] args) throws Exception {
+<<<<<<< HEAD
 		//SpringApplication.run(StockYourselfApplication.class, args);
 		/*yahoofinance.Stock stock = YahooFinance.get("AAPL");
 		yahoofinance.Stock stock2 = YahooFinance.get("GOOG");
@@ -45,6 +41,10 @@ public class StockYourselfApplication {
 		/*
 		yahoofinance.Stock tesla = YahooFinance.get("TSLA", true);
 		System.out.println(tesla.getHistory());*/
+=======
+		SpringApplication.run(StockYourselfApplication.class, args);
+
+>>>>>>> f331e7c1e88b38598166930f13edcd170d229e78
 	}
 }
 
