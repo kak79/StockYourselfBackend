@@ -92,7 +92,7 @@ public class UsersController {
 		if(stock != null && existingPort != null) {
 			userServ.removeStockFromPortfolio(existingPort, stock);
 			return ResponseEntity.status(HttpStatus.CREATED).build();
-		}else {
+		} else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
