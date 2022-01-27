@@ -253,6 +253,12 @@ public class UserServiceImpl implements UserService {
 			return allPostByPortfolio;
 		
 	}
+
+	@Override
+	public Stock getStock(String stockname) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 		
 
 }

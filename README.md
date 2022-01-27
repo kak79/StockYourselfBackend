@@ -2,7 +2,7 @@
 
 --------------
 
-The goal of this project is to use the Agile project management philosophy, Scrum methodology in a small team practicing git workflows utilizing PostgreSQL, Spring Boot, Angular, Spring testing, and Selenium frameworks.
+The goal of this project is to use the Agile project management philosophy, Scrum methodology.  By working in a small team we were able to practice git workflows utilizing the following frameworks: PostgreSQL, Spring Boot, Angular, Spring testing, and Selenium.
 
 --------
 

@@ -67,7 +67,7 @@ public class UsersController {
 	
 	@GetMapping("/stock/{stockStringId}")
 	public String getStockDetails(@PathVariable int stockStringId, Model model)throws Exception {
-		StockString stockString = userServ.;
+		StockString stockString = userServ;
 		List<StockData> stockList = new ArrayList<>();
 		stockList.add(stockData);
 		model.addAttribute("stockList",stockList);
