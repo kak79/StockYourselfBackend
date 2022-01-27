@@ -81,26 +81,26 @@ public class UsersController {
 	}
 	
 	
-	@PutMapping(path="/portfolio/{portfolioId}/")
-	public ResponseEntity<Void> removeStockFromPortfolio(@RequestBody Portfolio existingPort,@RequestBody StockString stock,@PathVariable int portfolioId) throws Exception {
-		
-		if(stock != null && existingPort != null) {
-			userServ.removeStockFromPortfolio(existingPort, stock);
-			return ResponseEntity.status(HttpStatus.CREATED).build();
-		}else {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-		}
-	}
+//	@PutMapping(path="/portfolio/{portfolioId}/")
+//	public ResponseEntity<Void> removeStockFromPortfolio(@RequestBody Portfolio existingPort,@RequestBody StockString stock,@PathVariable int portfolioId) throws Exception {
+//		
+//		if(stock != null && existingPort != null) {
+//			userServ.removeStockFromPortfolio(existingPort, stock);
+//			return ResponseEntity.status(HttpStatus.CREATED).build();
+//		}else {
+//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//		}
+//	}
 	
-	@PostMapping(path="/stock/{stockStringId}")
-	public ResponseEntity<Void> addStockToPortfolio(@RequestBody Portfolio existingPort,@RequestBody StockString stock, @PathVariable int portforlioId) throws Exception {
-		
-		if(stock != null && existingPort != null) {
-			userServ.addStockToPortfolio(existingPort, stock);
-			return ResponseEntity.status(HttpStatus.CREATED).build();
-		}else {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-		}
-	}
+//	@PostMapping(path="/stock/{stockStringId}")
+//	public ResponseEntity<Void> addStockToPortfolio(@RequestBody Portfolio existingPort,@RequestBody StockString stock, @PathVariable int portforlioId) throws Exception {
+//		
+//		if(stock != null && existingPort != null) {
+//			userServ.addStockToPortfolio(existingPort, stock);
+//			return ResponseEntity.status(HttpStatus.CREATED).build();
+//		}else {
+//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//		}
+//	}
 	
 }

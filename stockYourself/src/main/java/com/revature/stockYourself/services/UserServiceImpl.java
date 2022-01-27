@@ -25,7 +25,7 @@ import com.revature.stockYourself.exceptions.UsernameAlreadyExistsException;
 
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
-import yahoofinance.histquotes.Interval;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -37,12 +37,11 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	public UserServiceImpl(UserRepository userRepo,
 				PostRepository postRepo,
-				PortfolioRepository portfolioRepo,
-				StockStringRepository stockStringRepo) {
+				PortfolioRepository portfolioRepo) {
 		this.userRepo = userRepo;
 		this.postRepo = postRepo;
 		this.portfolioRepo = portfolioRepo;
-		this.stockStringRepo = stockStringRepo;
+		
 	}
 	
 	@Override
@@ -151,33 +150,33 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 	
-	@Override
-	@Transactional
-	public Portfolio addStockToPortfolio(Portfolio ExistingPort,StockString stockString) {
-		if(stockString !=null && stockString != null) {
-			Portfolio port = portfolioRepo.findByPortfolioId(ExistingPort.getPortfolioId());
-			StockString stock = stockStringRepo.findByStockName(stockString);
-			port.getPortfolioStringStocks().add(stock);
-			portfolioRepo.save(port);
-		}
-		return null;
-	}
+//	@Override
+//	@Transactional
+//	public Portfolio addStockToPortfolio(Portfolio ExistingPort,StockString stockString) {
+//		if(stockString !=null && stockString != null) {
+//			Portfolio port = portfolioRepo.findByPortfolioId(ExistingPort.getPortfolioId());
+//			StockString stock = stockStringRepo.findByStockName(stockString);
+//			port.getPortfolioStringStocks().add(stock);
+//			portfolioRepo.save(port);
+//		}
+//		return null;
+//	}
 	
-	@Override
-	@Transactional
-	public Portfolio removeStockFromPortfolio(Portfolio ExistingPort,StockString remStockString) {
-		if(ExistingPort != null && remStockString !=null) {
-			Portfolio port = portfolioRepo.findByPortfolioId(ExistingPort.getPortfolioId());
-			StockString stockString = stockStringRepo.findByStockName(remStockString);
-			port.getPortfolioStringStocks().forEach(stock -> {
-				if(stockString.getStockString().equals(stock.getStockString())) {
-					portfolioRepo.deleteById(stockString.getStockStringId());
-				}
-			});
-			
-		}
-		return null;
-	}
+//	@Override
+//	@Transactional
+//	public Portfolio removeStockFromPortfolio(Portfolio ExistingPort,StockString remStockString) {
+//		if(ExistingPort != null && remStockString !=null) {
+//			Portfolio port = portfolioRepo.findByPortfolioId(ExistingPort.getPortfolioId());
+//			StockString stockString = stockStringRepo.findByStockName(remStockString);
+//			port.getPortfolioStringStocks().forEach(stock -> {
+//				if(stockString.getStockString().equals(stock.getStockString())) {
+//					portfolioRepo.deleteById(stockString.getStockStringId());
+//				}
+//			});
+//			
+//		}
+//		return null;
+//	}
 
 	
 

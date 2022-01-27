@@ -18,16 +18,16 @@ public class Portfolio {
 	private int portfolioId;
 	private String portfolioName;
 	// private double points;
-	@ManyToMany
-	@JoinTable(name="portfolio_stock",
-			joinColumns = @JoinColumn(name="portfolo_id"),
-			inverseJoinColumns = @JoinColumn(name="stock_string"))
-	private List<StockString> portfolioStingStocks;
+//	@ManyToMany
+//	@JoinTable(name="portfolio_stock",
+//			joinColumns = @JoinColumn(name="portfolo_id"),
+//			inverseJoinColumns = @JoinColumn(name="stock_string"))
+//	private List<StockString> portfolioStingStocks;
 	
 	public Portfolio() {
 		portfolioId = 0;
 		portfolioName = " ";
-		portfolioStingStocks = new ArrayList<>();
+//		portfolioStingStocks = new ArrayList<>();
 	}	
 	
 	public int getPortfolioId() {
@@ -48,23 +48,23 @@ public class Portfolio {
 		this.portfolioName = portfolioName;
 	}
 
-	public List<StockString> getPortfolioStringStocks() {
-		return portfolioStingStocks;
-	}
-
-	public void setPortfolioStringStocks(List<StockString> portfolioStringStocks) {
-		this.portfolioStingStocks = portfolioStringStocks;
-	}
+//	public List<StockString> getPortfolioStringStocks() {
+//		return portfolioStingStocks;
+//	}
+//
+//	public void setPortfolioStringStocks(List<StockString> portfolioStringStocks) {
+//		this.portfolioStingStocks = portfolioStringStocks;
+//	}
 
 	@Override
 	public String toString() {
 		return "Portfolio [portfolioId=" + portfolioId + ", portfolioName=" + portfolioName + ", portfolioStingStocks="
-				+ portfolioStingStocks + "]";
+				 + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(portfolioId, portfolioName, portfolioStingStocks);
+		return Objects.hash(portfolioId, portfolioName);
 	}
 
 	@Override
@@ -76,8 +76,7 @@ public class Portfolio {
 		if (getClass() != obj.getClass())
 			return false;
 		Portfolio other = (Portfolio) obj;
-		return portfolioId == other.portfolioId && Objects.equals(portfolioName, other.portfolioName)
-				&& Objects.equals(portfolioStingStocks, other.portfolioStingStocks);
+		return portfolioId == other.portfolioId && Objects.equals(portfolioName, other.portfolioName);
 	}
 	
 	

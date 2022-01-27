@@ -21,8 +21,8 @@ public interface UserService {
 	public Stock getStock(String stockname) throws IOException;
 	public StockData getStockInfo(StockString stockName)throws Exception;
 	public List<StockString> getPortfolio(Portfolio port) ;
-	public Portfolio addStockToPortfolio(Portfolio ExistingPort,StockString stockString);
-	public Portfolio removeStockFromPortfolio(Portfolio ExistingPort,StockString remStockString);
+//	public Portfolio addStockToPortfolio(Portfolio ExistingPort,StockString stockString);
+//	public Portfolio removeStockFromPortfolio(Portfolio ExistingPort,StockString remStockString);
 	public Post createPost(Post newPost);
 	public Post updatePost(Post existingPost);
 	public List<Post> getAllPosts();
