@@ -2,18 +2,12 @@ package com.revature.stockYourself;
 
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 import com.revature.stockYourself.beans.Portfolio;
 import com.revature.stockYourself.services.UserService;
-import com.revature.stockYourself.services.UserServiceImpl;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import yahoofinance.Stock;
-import yahoofinance.YahooFinance;
 
 @SpringBootApplication
 public class StockYourselfApplication {
@@ -24,7 +18,7 @@ public class StockYourselfApplication {
 		
 		Portfolio port = new Portfolio();
 		Map<String, Stock> stock = userServ.getListOfStocks(port.getPortfolioStringStocks());
-		System.out.println(stock.);
+		System.out.println(stock);
 //		SpringApplication.run(StockYourselfApplication.class, args);
 //	}
 //

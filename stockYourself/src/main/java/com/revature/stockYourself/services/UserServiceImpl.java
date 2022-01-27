@@ -259,6 +259,12 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Map<String, Stock> getListOfStocks(List<StockString> portfolioStringStocks) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 		
 
 }
