@@ -72,3 +72,8 @@ user can delete a post made by self
 
 user can comment on a post by another user
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> f69da106cf292bc8af799370289be7fa60ec37c7

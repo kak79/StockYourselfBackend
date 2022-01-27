@@ -7,6 +7,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
+
+import org.springframework.data.annotation.Id;
+
 import yahoofinance.Stock;
 
 @Entity
@@ -15,9 +22,12 @@ public class Portfolio {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int portfolioId;
 	private List<yahoofinance.Stock> stocks;
+	private String portfolioName;
+	private List<StockString> portfolioStingStocks;
 	
 	public Portfolio() {
 		portfolioId = 0;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 		
@@ -61,6 +71,9 @@ public class Portfolio {
 	}	
 	
 =======
+=======
+		portfolioName = " ";
+>>>>>>> fe6365e99fbb451a8fe44e9fb3e29719342c4890
 		stocks = new ArrayList<>();
 	}
 
@@ -143,3 +156,12 @@ public class Portfolio {
 	
 	
 }
+
+
+
+
+
+
+
+
+
