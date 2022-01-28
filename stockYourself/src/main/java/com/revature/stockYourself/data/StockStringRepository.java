@@ -9,5 +9,5 @@ import com.revature.stockYourself.beans.User;
 
 @Repository
 public interface StockStringRepository extends JpaRepository<StockString, Integer>{
-	public StockString findBystockString(StockString stockString);
+	public StockString findBystockStringId(int id);
 }

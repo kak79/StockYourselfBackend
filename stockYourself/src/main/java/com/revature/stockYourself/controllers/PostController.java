@@ -15,6 +15,7 @@ import com.revature.stockYourself.beans.Post;
 import com.revature.stockYourself.beans.User;
 import com.revature.stockYourself.exceptions.CouldNotFindAllPostsException;
 import com.revature.stockYourself.exceptions.CreatorWasNullException;
+import com.revature.stockYourself.exceptions.PortfolioEnteredWasNull;
 import com.revature.stockYourself.services.UserService;
 
 @RestController
@@ -49,8 +50,8 @@ public class PostController {
 		
 	}
 	
-	@GetMapping(path="{creatorOfPosts}/posts")
-	public ResponseEntity<List<Post>> allPostsByPortfolio(@RequestBody Portfolio portfolioWithPosts) throws CreatorWasNullException {
+	@GetMapping(path="{portfolio}/posts")
+	public ResponseEntity<List<Post>> allPostsByPortfolio(@RequestBody Portfolio portfolioWithPosts) throws CreatorWasNullException, PortfolioEnteredWasNull {
 	List<Post> postsByPortfolio = userServ.getAllPostsByPortfolio(portfolioWithPosts);
 		 if (!(postsByPortfolio.isEmpty())) {
 			 return ResponseEntity.ok(postsByPortfolio);
