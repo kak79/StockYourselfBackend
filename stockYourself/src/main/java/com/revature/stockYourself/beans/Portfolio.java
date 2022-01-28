@@ -22,7 +22,7 @@ public class Portfolio {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int portfolioId;
 	private String portfolioName;
-//	private List<StockString> portfolioStringStocks;
+
 	public Portfolio() {
 		portfolioId = 0;
 		portfolioName = "";
