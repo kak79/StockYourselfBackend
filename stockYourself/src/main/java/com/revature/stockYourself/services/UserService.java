@@ -9,6 +9,7 @@ import com.revature.stockYourself.beans.User;
 import com.revature.stockYourself.exceptions.CouldNotFindAllPostsException;
 import com.revature.stockYourself.exceptions.CreatorWasNullException;
 import com.revature.stockYourself.exceptions.IncorrectCredentialsException;
+import com.revature.stockYourself.exceptions.NoPortfolioByUserIdException;
 import com.revature.stockYourself.exceptions.PortfolioEnteredWasNull;
 import com.revature.stockYourself.exceptions.PostAndOrUserWasNull;
 import com.revature.stockYourself.exceptions.PostDoesNotExistInDatabaseException;
@@ -28,11 +29,12 @@ public interface UserService {
 	public List<Post> getAllPostsByCreator(User creator) throws CreatorWasNullException;
 	public List<Post> getAllPostsByPortfolio(Portfolio portfolioPostedOn) throws PortfolioEnteredWasNull, CreatorWasNullException;
 	public void deletePost(Post postToDelete, User loggedInUser) throws UserIsNotThePostCreatorException, PostAndOrUserWasNull;	
-	
+	public Post getPostById(int postId) throws PostDoesNotExistInDatabaseException;
 	public List<StockString> getPortfolio(Portfolio port) ;
 //	public Portfolio addStockToPortfolio(User user,StockString stock);
 //	public Portfolio removeStockToPortfolio(User user,StockString stock);
 //	
+	public Portfolio getPortfolioByPortfolioId(int portfolioWithPostsId) throws NoPortfolioByUserIdException;
 	
 	
 //	public Portfolio addStockToPortfolio(Portfolio ExistingPort,StockString stockString);
