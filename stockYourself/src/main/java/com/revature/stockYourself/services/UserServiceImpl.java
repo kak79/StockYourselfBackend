@@ -22,6 +22,7 @@ import com.revature.stockYourself.data.UserRepository;
 import com.revature.stockYourself.exceptions.CouldNotFindAllPostsException;
 import com.revature.stockYourself.exceptions.CreatorWasNullException;
 import com.revature.stockYourself.exceptions.IncorrectCredentialsException;
+import com.revature.stockYourself.exceptions.NoPortfolioByUserIdException;
 import com.revature.stockYourself.exceptions.PostAndOrUserWasNull;
 import com.revature.stockYourself.exceptions.PostDoesNotExistInDatabaseException;
 import com.revature.stockYourself.exceptions.PostEnteredWasNullException;
@@ -125,6 +126,19 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+
+	@Override
+	public Post getPostById(int postId) throws PostDoesNotExistInDatabaseException {
+		Post post = postRepo.findByPostId(postId);
+		if(post != null) {
+			return post;
+		} else {
+			throw new PostDoesNotExistInDatabaseException();
+		}
+	}
+
+	
+	
 	@Override
 	public List<Post> getAllPostsByCreator(User creator) throws CreatorWasNullException {
 		List<Post> allPostByCreator = new ArrayList<Post>();
@@ -176,6 +190,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	
+	
 	@Override
 	public List<StockString> getPortfolioStocks(Portfolio port) {
 		if(port != null) {
@@ -188,6 +203,16 @@ public class UserServiceImpl implements UserService {
 			return stocks;
 		}
 		return null;
+	}
+
+	@Override
+	public Portfolio getPortfolioByPortfolioId(int portfolioWithPostsId) throws NoPortfolioByUserIdException {
+			Portfolio portfolio = portRepo.findByPortfolioId(portfolioWithPostsId);
+			if (portfolio != null) {
+				return portfolio;
+			} else {
+				throw new NoPortfolioByUserIdException();
+			}
 	}
 
 	
