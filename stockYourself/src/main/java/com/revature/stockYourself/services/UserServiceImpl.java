@@ -207,7 +207,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Portfolio removeStockToPortfolio(Portfolio port,StockString stock) {
+	public Portfolio removeStockFromPortfolio(Portfolio port,StockString stock) {
 		if(port != null && stock != null) {
 			Portfolio existingport = portRepo.findByPortfolioId(port.getPortfolioId());
 			if(existingport.getPortfolioStringStocks().contains(stock)) {
@@ -216,8 +216,6 @@ public class UserServiceImpl implements UserService {
 			}
 		return null;
 	}
-	
-	
-	
-
+	return null;
+}
 }

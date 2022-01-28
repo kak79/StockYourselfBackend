@@ -31,7 +31,7 @@ public interface UserService {
 	
 	public List<StockString> getPortfolioStocks(Portfolio port);
 	public Portfolio addStockToPortfolio(Portfolio port,StockString stock);
-	public Portfolio removeStockToPortfolio(Portfolio port,StockString stock);
+	public Portfolio removeStockFromPortfolio(Portfolio port,StockString stock);
 //	
 	
 	
