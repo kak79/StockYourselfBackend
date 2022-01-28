@@ -67,33 +67,33 @@ public class UserServiceTest {
 		});
 	}
 	
-	@Test
-	public void registerPersonSuccessfully() throws UsernameAlreadyExistsException {
-		User person = new User();
-		person.setUserId(10);
-		
-		when(userRepo.save(person)).thenReturn(person);
-		
-		User actualUser = userServ.register(person);
-		assertEquals(10, actualUser.getUserId());
-	}
+//	@Test
+//	public void registerPersonSuccessfully() throws UsernameAlreadyExistsException {
+//		User person = new User();
+//		person.setUserId(10);
+//		
+//		when(userRepo.save(person)).thenReturn(person);
+//		
+//		User actualUser = userServ.register(person);
+//		assertEquals(10, actualUser.getUserId());
+//	}
 	
-	@Test
-	public void registerPersonSomethingWrong() throws UsernameAlreadyExistsException {
-		User user = new User();
-		when(userRepo.save(user)).thenThrow(new RuntimeException());
-		User actualUser = userServ.register(user);
-		assertNull(actualUser);
-	}
-	
-	@Test
-	public void registerPersonUsernameAlreadyExists() {
-		User user = new User();
-		when(userRepo.save(user)).thenThrow(new RuntimeException("unique constraint violation"));
-
-		assertThrows(UsernameAlreadyExistsException.class, () -> {
-			userServ.register(user);
-		});
-	}
+//	@Test
+//	public void registerPersonSomethingWrong() throws UsernameAlreadyExistsException {
+//		User user = new User();
+//		when(userRepo.save(user)).thenThrow(new RuntimeException());
+//		User actualUser = userServ.register(user);
+//		assertNull(actualUser);
+//	}
+//	
+//	@Test
+//	public void registerPersonUsernameAlreadyExists() {
+//		User user = new User();
+//		when(userRepo.save(user)).thenThrow(new RuntimeException("unique constraint violation"));
+//
+//		assertThrows(UsernameAlreadyExistsException.class, () -> {
+//			userServ.register(user);
+//		});
+//	}
 	
 }

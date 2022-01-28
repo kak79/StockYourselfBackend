@@ -111,32 +111,32 @@ public class UsersControllerTest {
 			.andReturn();
 	}
 	
-	@Test
-	public void registerSuccessfully() throws Exception {
-		User newUser = new User();
-		
-		when(userServ.register(newUser)).thenReturn(newUser);
-		Map<String,Integer> idMap = new HashMap<>();
-		idMap.put("generatedId", 0);
-		
-		String jsonUser = objMapper.writeValueAsString(newUser);
-		String jsonIdMap = objMapper.writeValueAsString(idMap);
-		mockMvc.perform(post("/users").content(jsonUser).contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isCreated())
-				.andExpect(content().json(jsonIdMap))
-				.andReturn();
-	}
+//	@Test
+//	public void registerSuccessfully() throws Exception {
+//		User newUser = new User();
+//		
+//		when(userServ.register(newUser)).thenReturn(newUser);
+//		Map<String,Integer> idMap = new HashMap<>();
+//		idMap.put("generatedId", 0);
+//		
+//		String jsonUser = objMapper.writeValueAsString(newUser);
+//		String jsonIdMap = objMapper.writeValueAsString(idMap);
+//		mockMvc.perform(post("/users").content(jsonUser).contentType(MediaType.APPLICATION_JSON))
+//				.andExpect(status().isCreated())
+//				.andExpect(content().json(jsonIdMap))
+//				.andReturn();
+//	}
 	
-	@Test
-	public void registerUsernameAlreadyExists() throws Exception {
-		User newUser = new User();
-		
-		when(userServ.register(newUser)).thenThrow(UsernameAlreadyExistsException.class);
-		
-		String jsonUser = objMapper.writeValueAsString(newUser);
-		mockMvc.perform(post("/users").content(jsonUser).contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isConflict())
-				.andReturn();
-	}
+//	@Test
+//	public void registerUsernameAlreadyExists() throws Exception {
+//		User newUser = new User();
+//		
+//		when(userServ.register(newUser)).thenThrow(UsernameAlreadyExistsException.class);
+//		
+//		String jsonUser = objMapper.writeValueAsString(newUser);
+//		mockMvc.perform(post("/users").content(jsonUser).contentType(MediaType.APPLICATION_JSON))
+//				.andExpect(status().isConflict())
+//				.andReturn();
+//	}
 
 }

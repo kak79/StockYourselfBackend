@@ -126,6 +126,19 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+
+	@Override
+	public Post getPostById(int postId) throws PostDoesNotExistInDatabaseException {
+		Post post = postRepo.findByPostId(postId);
+		if(post != null) {
+			return post;
+		} else {
+			throw new PostDoesNotExistInDatabaseException();
+		}
+	}
+
+	
+	
 	@Override
 	public List<Post> getAllPostsByCreator(User creator) throws CreatorWasNullException {
 		List<Post> allPostByCreator = new ArrayList<Post>();
@@ -177,6 +190,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	
+	
 	@Override
 	public List<StockString> getPortfolioStocks(Portfolio port) {
 		if(port != null) {
@@ -199,16 +213,6 @@ public class UserServiceImpl implements UserService {
 			} else {
 				throw new NoPortfolioByUserIdException();
 			}
-	}
-
-	@Override
-	public Post getPostById(int postId) throws PostDoesNotExistInDatabaseException {
-		Post post = postRepo.findByPostId(postId);
-		if(post != null) {
-			return post;
-		} else {
-			throw new PostDoesNotExistInDatabaseException();
-		}
 	}
 
 	

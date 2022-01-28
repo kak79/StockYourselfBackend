@@ -16,6 +16,7 @@ public class StockString {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int stockStringId;
+	@Column(name="stock_name")
 	private String stockString;
 	
 	public StockString() {

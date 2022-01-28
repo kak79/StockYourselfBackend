@@ -12,7 +12,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 //import org.springframework.data.annotation.Id;
+import javax.persistence.OneToMany;
 
 
 
@@ -22,8 +25,12 @@ public class Portfolio {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int portfolioId;
 	private String portfolioName;
-
+	@OneToMany
+	@JoinTable(name="stock_portfolio",
+	joinColumns = @JoinColumn(name="portfolio_id"), 
+	inverseJoinColumns = @JoinColumn(name="stock_string_id")) 
 	private List<StockString> portfolioStringStocks;
+	
 
 	public Portfolio() {
 		portfolioId = 0;
