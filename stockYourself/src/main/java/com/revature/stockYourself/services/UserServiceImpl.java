@@ -2,8 +2,10 @@ package com.revature.stockYourself.services;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,11 +41,12 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	public UserServiceImpl(UserRepository userRepo,
 				PostRepository postRepo,
-				PortfolioRepository portfolioRepo) {
+				PortfolioRepository portfolioRepo,
+				StockStringRepository stockStringRepo) {
 		this.userRepo = userRepo;
 		this.postRepo = postRepo;
 		this.portRepo = portfolioRepo;
-		
+		this.stockStringRepo = stockStringRepo;
 	}
 	
 	@Override
@@ -174,23 +177,45 @@ public class UserServiceImpl implements UserService {
 
 	
 	@Override
-	public List<StockString> getPortfolio(Portfolio port) {
-		// TODO Auto-generated method stub
+	public List<StockString> getPortfolioStocks(Portfolio port) {
+		if(port != null) {
+			Portfolio existingPort = portRepo.findByPortfolioId(port.getPortfolioId());
+			List<StockString> stocks = new ArrayList<>();
+			existingPort.getPortfolioStringStocks().forEach(stock ->{
+				stockStringRepo.getById(stock.getStockStringId());
+				stocks.add(stock);
+			});
+			return stocks;
+		}
 		return null;
 	}
 
 	
-//	@Override
-//	public Portfolio addStockToPortfolio(User user,StockString stock) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public Portfolio removeStockToPortfolio(User user,StockString stock) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	@Override
+	public Portfolio addStockToPortfolio(Portfolio port, StockString stock) {
+		if(port != null && stock != null) {
+			Portfolio existingport = portRepo.findByPortfolioId(port.getPortfolioId());
+			if(existingport.getPortfolioStringStocks().contains(stock)) {
+				return existingport;
+			}else {
+				existingport.getPortfolioStringStocks().add(stockStringRepo.findBystockStringId(stock.getStockStringId()));
+				return existingport;
+			}
+			
+		}
+		return null;
+	}
+
+	@Override
+	public Portfolio removeStockToPortfolio(Portfolio port,StockString stock) {
+		if(port != null && stock != null) {
+			Portfolio existingport = portRepo.findByPortfolioId(port.getPortfolioId());
+			if(existingport.getPortfolioStringStocks().contains(stock)) {
+				existingport.getPortfolioStringStocks().remove(stockStringRepo.findBystockStringId(stock.getStockStringId()));
+				return existingport;
+			}
+		return null;
+	}
 	
 	
 	

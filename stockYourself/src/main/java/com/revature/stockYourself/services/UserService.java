@@ -29,9 +29,9 @@ public interface UserService {
 	public List<Post> getAllPostsByPortfolio(Portfolio portfolioPostedOn) throws PortfolioEnteredWasNull, CreatorWasNullException;
 	public void deletePost(Post postToDelete, User loggedInUser) throws UserIsNotThePostCreatorException, PostAndOrUserWasNull;	
 	
-	public List<StockString> getPortfolio(Portfolio port) ;
-//	public Portfolio addStockToPortfolio(User user,StockString stock);
-//	public Portfolio removeStockToPortfolio(User user,StockString stock);
+	public List<StockString> getPortfolioStocks(Portfolio port);
+	public Portfolio addStockToPortfolio(Portfolio port,StockString stock);
+	public Portfolio removeStockToPortfolio(Portfolio port,StockString stock);
 //	
 	
 	
