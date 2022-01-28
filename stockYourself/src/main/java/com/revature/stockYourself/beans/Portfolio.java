@@ -23,16 +23,12 @@ public class Portfolio {
 	private int portfolioId;
 	private List<yahoofinance.Stock> stocks;
 	private String portfolioName;
-<<<<<<< HEAD
-	private List<StockString> portfolioStingStocks;
-=======
 	// private double points;
 //	@ManyToMany
 //	@JoinTable(name="portfolio_stock",
 //			joinColumns = @JoinColumn(name="portfolo_id"),
 //			inverseJoinColumns = @JoinColumn(name="stock_string"))
 //	private List<StockString> portfolioStingStocks;
->>>>>>> f331e7c1e88b38598166930f13edcd170d229e78
 	
 	public Portfolio() {
 		portfolioId = 0;
