@@ -22,24 +22,40 @@ public class Portfolio {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int portfolioId;
 	private String portfolioName;
-//	private List<StockString> portfolioStringStocks;
+
+	private List<StockString> portfolioStringStocks;
+
 	public Portfolio() {
 		portfolioId = 0;
 		portfolioName = "";
-//		portfolioStringStocks = new ArrayList<StockString>();
+		portfolioStringStocks = new ArrayList<StockString>();
 	}
+	
 	public int getPortfolioId() {
 		return portfolioId;
 	}
+	
 	public void setPortfolioId(int portfolioId) {
 		this.portfolioId = portfolioId;
 	}
+	
 	public String getPortfolioName() {
 		return portfolioName;
 	}
+	
 	public void setPortfolioName(String portfolioName) {
 		this.portfolioName = portfolioName;
 	}
+	
+	
+	public List<StockString> getPortfolioStringStocks() {
+		return portfolioStringStocks;
+	}
+	
+	public void setPortfolioStringStocks(List<StockString> portfolioStringStocks) {
+		this.portfolioStringStocks = portfolioStringStocks;
+	}
+	
 	@Override
 	public String toString() {
 		return "Portfolio [portfolioId=" + portfolioId + ", portfolioName=" + portfolioName + "]";

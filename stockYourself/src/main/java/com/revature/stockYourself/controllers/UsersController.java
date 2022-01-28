@@ -63,74 +63,33 @@ public class UsersController {
 	}
 	
 
-//	@PostMapping(path="/{userId}/portfolio")
-//	public ResponseEntity<Map<String,Stock>> viewMyPortfolio(@RequestBody User userPort,@PathVariable int userId) throws Exception {
-//		Map<String, Stock> stock = userServ.getListOfStocks(userPort.getPortfolio().getPortfolioStingStocks());
-//		if (stock != null) {
-//			return ResponseEntity.ok(stock);
-//		} else {
-//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//		}
-//	}
-//	
-//	@PostMapping(path="/{userId}/portfolio")
-//	public ResponseEntity<Portfolio> removeStockFromPortfolio(@RequestBody User user,@RequestBody StockString stock) throws Exception {
-//		
-//		if(stock != null && user != null) {
-//			Portfolio port = userServ.removeStockToPortfolio(user, stock);
-//			return ResponseEntity.ok(port);
-//		}else {
-//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//		}
-//	}
-//
-//	@GetMapping("/stock/{stockStringId}")
-//	public String getStockDetails(@PathVariable int stockStringId, Model model)throws Exception {
-//
-////		StockString stockString = userServ.;
-//		List<StockData> stockList = new ArrayList<>();
-////		stockList.add(stockData);
-//		model.addAttribute("stockList",stockList);
-//
-//		return "stock";
-//	}
-//
-//	
-//	
-//	@GetMapping(path="/portfolio/{portfolioId}")
-//	public ResponseEntity<List<StockString>> getPortfolioById(@RequestBody Portfolio existingPort,@PathVariable int portfolioId) throws Exception {
-//		if(existingPort != null) {
-//		List<StockString>stocks = userServ.getPortfolio(existingPort);
-//		return ResponseEntity.ok(stocks);
-//		}
-//		return null;
-//	}
-//	
-//	
-//
-//	@PutMapping(path="/portfolio/{portfolioId}/")
-//	public ResponseEntity<Void> removeStockFromPortfolio(@RequestBody Portfolio existingPort,@RequestBody StockString stock,@PathVariable int portfolioId) throws Exception {
-//		
-//		if(stock != null && existingPort != null) {
-//			userServ.removeStockFromPortfolio(existingPort, stock);
-//			return ResponseEntity.status(HttpStatus.CREATED).build();
-//		}else {
-//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//		}
-//	}
 
-//	@PutMapping(path="/portfolio/{portfolioId}/")
-//	public ResponseEntity<Void> removeStockFromPortfolio(@RequestBody Portfolio existingPort,@RequestBody StockString stock,@PathVariable int portfolioId) throws Exception {
-//		
-//		if(stock != null && existingPort != null) {
-//			userServ.removeStockFromPortfolio(existingPort, stock);
-//			return ResponseEntity.status(HttpStatus.CREATED).build();
-//		}else {
-//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//		}
-//	}
+	@PostMapping(path="/portfolio/{userId}")
+	public ResponseEntity<Portfolio> removeStockFromPortfolio(@RequestBody Portfolio portfolio,@RequestBody StockString stock,@PathVariable int userId) throws Exception {
+		
+		if(stock != null && portfolio != null) {
+			Portfolio port = userServ.removeStockFromPortfolio(portfolio, stock);
+			return ResponseEntity.ok(port);
+		}else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+	}
+	
+	@GetMapping(path="/portfolio/{portfolioId}")
+	public ResponseEntity<List<StockString>> getPortfolioById(@RequestBody Portfolio existingPort,@PathVariable int portfolioId) throws Exception {
+		if(existingPort != null) {
+		List<StockString>stocks = userServ.getPortfolioStocks(existingPort);
+		return ResponseEntity.ok(stocks);
+		}
+		return null;
+	}
+	
+	
+
+
 
 	
+<<<<<<< HEAD
 	
 	@GetMapping(path="/portfolio/{portfolioId}")
 	public ResponseEntity<List<StockString>> getPortfolioById(@RequestBody Portfolio existingPort,@PathVariable int portfolioId) throws Exception {
@@ -173,5 +132,17 @@ public class UsersController {
 //			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 //		}
 //	}
+=======
+	@PostMapping(path="/stock/{userId}")
+	public ResponseEntity<Void> addStockToPortfolio(@RequestBody Portfolio existingPort,@RequestBody StockString stock, @PathVariable int userId) throws Exception {
+		
+		if(stock != null && existingPort != null) {
+			userServ.addStockToPortfolio(existingPort, stock);
+			return ResponseEntity.status(HttpStatus.CREATED).build();
+		}else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
+	}
+>>>>>>> 40bde0b40e989ca9ff72b1f9099b5135f7978864
 	
 }

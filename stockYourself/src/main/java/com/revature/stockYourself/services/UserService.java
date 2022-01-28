@@ -29,10 +29,17 @@ public interface UserService {
 	public List<Post> getAllPostsByCreator(User creator) throws CreatorWasNullException;
 	public List<Post> getAllPostsByPortfolio(Portfolio portfolioPostedOn) throws PortfolioEnteredWasNull, CreatorWasNullException;
 	public void deletePost(Post postToDelete, User loggedInUser) throws UserIsNotThePostCreatorException, PostAndOrUserWasNull;	
+<<<<<<< HEAD
 	public Post getPostById(int postId) throws PostDoesNotExistInDatabaseException;
 	public List<StockString> getPortfolio(Portfolio port) ;
 //	public Portfolio addStockToPortfolio(User user,StockString stock);
 //	public Portfolio removeStockToPortfolio(User user,StockString stock);
+=======
+	
+	public List<StockString> getPortfolioStocks(Portfolio port);
+	public Portfolio addStockToPortfolio(Portfolio port,StockString stock);
+	public Portfolio removeStockFromPortfolio(Portfolio port,StockString stock);
+>>>>>>> 40bde0b40e989ca9ff72b1f9099b5135f7978864
 //	
 	public Portfolio getPortfolioByPortfolioId(int portfolioWithPostsId) throws NoPortfolioByUserIdException;
 	
