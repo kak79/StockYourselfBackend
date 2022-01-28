@@ -2,16 +2,36 @@ package com.revature.stockYourself.beans;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="user_table")
 public class User {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userId;
 	private String firstName;
 	private String lastName;
 	private String username;
+	@Column(name="passwrd")
 	private String passwrd;
 	private String email;
 	private String phoneNumber;
+	@ManyToOne
+	@JoinColumn(name="role_id")
 	private Role role;
+	@OneToOne
+	@JoinColumn(name="portfolio_id")
 	private Portfolio portfolio;
 	
 	public User() {
