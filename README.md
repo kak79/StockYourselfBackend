@@ -115,7 +115,7 @@ javac -version
 
 Copyright (c) 2022 Team Amplifire
 
-Team Amplifire: 
+Team Amplifire:  <br>
           Brett Dixon <br>
           Daniel Joseph <br>
           Kimberly Kohel-Hayes <br>
