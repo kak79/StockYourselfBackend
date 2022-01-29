@@ -34,8 +34,9 @@ public class Post {
 			inverseJoinColumns = @JoinColumn(name="user_id"))
 	private User creator;
 	@ManyToOne
-	@JoinTable(name="post_portfolio")
-	//do we need something similar to lines 35&36?
+	@JoinTable(name="post_portfolio",
+			joinColumns = @JoinColumn(name="post_id"),
+			inverseJoinColumns = @JoinColumn(name="portfolio_id"))
 	private Portfolio portfolioPostedOn;
 	
 	public Post() {
