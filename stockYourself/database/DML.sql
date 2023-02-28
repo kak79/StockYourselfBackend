@@ -2,6 +2,18 @@ INSERT INTO user_role (role_name) VALUES
 	('user'),
 	('admin');
 
+INSERT INTO stock_string (stock_name) VALUES 
+	('PGH'),
+	('IIF'),
+	('BTO'),
+	('GAIN'),
+	('AVGR'),
+	('RGNX'),
+	('NVCN'),
+	('MTB'),
+	('BDC'),
+	('HD');	
+	
 INSERT INTO portfolio (portfolio_name) VALUES 
 	('Bretts'),
 	('Kims'),
@@ -36,7 +48,7 @@ INSERT INTO post_portfolio (post_id,portfolio_id) VALUES
 	(5, 4);	
 
 INSERT INTO stock_portfolio (portfolio_id, stock_string_id) VALUES 
-	(1, 23),
-	(2, 24),
-	(3, 25),
-	(4, 26);
+	(1, 10),
+	(2, 2),
+	(3, 5),
+	(4, 6);
